@@ -35,7 +35,8 @@ namespace PayPalEmulator
 					if (kvp.Value.Errors.Any())
 					{
 						TagBuilder item = new TagBuilder("li");
-						item.InnerHtml = String.Format("{0}: {1}", kvp.Key, kvp.Value.Errors.FirstOrDefault());
+						item.InnerHtml = String.Format("{0}: {1}", kvp.Key, kvp.Value.Errors.FirstOrDefault().ErrorMessage);
+						list.InnerHtml += item.ToString();
 					}
 				}
 

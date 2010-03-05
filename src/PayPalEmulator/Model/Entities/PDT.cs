@@ -20,17 +20,17 @@ namespace PayPalEmulator
 		public virtual QueryString ToQueryString()
 		{
 			return new QueryString()
-				.Add("tx", Tx)
-				.Add("st", State)
-				.Add("amt", Amount)
-				.Add("cc", Currency)
-				.Add("cm", Custom)
-				.Add("item_number", ItemNumber);
+				.Add("tx", Tx ?? "")
+				.Add("st", State ?? "")
+				.Add("amt", Amount ?? "")
+				.Add("cc", Currency ?? "")
+				.Add("cm", Custom ?? "")
+				.Add("item_number", ItemNumber ?? "");
 		}
 
 		public virtual string ToFullReturnUrl()
 		{
-			return ReturnUrl + ToQueryString();
+			return ReturnUrl + ToQueryString().ToString();
 		}
 	}
 }

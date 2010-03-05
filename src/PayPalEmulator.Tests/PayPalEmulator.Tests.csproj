@@ -93,7 +93,7 @@
     <Compile Include="Controllers\PaymentControllerTest.cs" />
     <Compile Include="Helpers\BinderHelpers.cs" />
     <Compile Include="Helpers\DatabaseTest.cs" />
-    <Compile Include="Model\PDTMappingTests.cs" />
+    <Compile Include="Model\PDTTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>

@@ -30,5 +30,29 @@ namespace PayPalEmulator.Tests
 				.CheckProperty(x => x.ItemNumber, "")
 				.VerifyTheMappings();
 		}
+
+		[TestMethod]
+		public void ShoulBuildQueryString()
+		{
+			// arrange
+			PDT pdt = new PDT { Tx = "ABC", Amount = "123" };
+
+			// act
+			QueryString qs = pdt.ToQueryString();
+
+			// assert
+			Assert.AreEqual(6, qs.Count);
+			Assert.AreEqual("?tx=ABC&st=&amt=123&cc=&cm=&item_number=", qs.ToString());
+		}
+	
+		[TestMethod]
+		public void ShoulBuildFullUrl()
+		{
+			// arrange
+			PDT pdt = new PDT { Tx = "ABC", Amount = "123", ReturnUrl = "http://test.com" };
+
+			// assert
+			Assert.AreEqual("http://test.com?tx=ABC&st=&amt=123&cc=&cm=&item_number=", pdt.ToFullReturnUrl());
+		}
 	}
 }
