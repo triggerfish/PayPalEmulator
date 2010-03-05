@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Triggerfish.Ninject</name>
+    </assembly>
+    <members>
+        <member name="T:Triggerfish.Ninject.ObjectFactory">
+            <summary>
+            Object factory using Ninject
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Ninject.ObjectFactory.Get``1">
+            <summary>
+            Gets an object using Ninject
+            </summary>
+            <typeparam name="T">The type of object to get</typeparam>
+            <returns>The object if successful, throws an exception if failed</returns>
+        </member>
+        <member name="M:Triggerfish.Ninject.ObjectFactory.Get``1(System.Type)">
+            <summary>
+            Gets an object using Ninject
+            </summary>
+            <typeparam name="T">The type of object to return</typeparam>
+            <param name="type">The type of the object to get</param>
+            <returns>The object if successful, throws an exception if failed</returns>
+        </member>
+        <member name="M:Triggerfish.Ninject.ObjectFactory.TryGet``1">
+            <summary>
+            Trys to get an object using Ninject
+            </summary>
+            <typeparam name="T">The type of object to get</typeparam>
+            <returns>The object if successful, null if failed</returns>
+        </member>
+        <member name="M:Triggerfish.Ninject.ObjectFactory.TryGet``1(System.Type)">
+            <summary>
+            Trys to get an object using Ninject
+            </summary>
+            <typeparam name="T">The type of object to return</typeparam>
+            <param name="type">The type of the object to get</param>
+            <returns>The object if successful, throws an exception if failed</returns>
+        </member>
+        <member name="M:Triggerfish.Ninject.ObjectFactory.Load(Ninject.Modules.INinjectModule)">
+            <summary>
+            Load a new Ninject dependency module into the kernel
+            </summary>
+            <param name="module">The module to load</param>
+        </member>
+        <member name="P:Triggerfish.Ninject.ObjectFactory.Kernel">
+            <summary>
+            Static accessor to the Ninject kernel
+            </summary>
+        </member>
+    </members>
+</doc>

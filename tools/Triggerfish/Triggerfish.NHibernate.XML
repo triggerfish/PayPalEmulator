@@ -1,0 +1,546 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Triggerfish.NHibernate</name>
+    </assembly>
+    <members>
+        <member name="T:Triggerfish.NHibernate.Validator.ValidatorExtensions">
+            <summary>
+            Extension methods for validation errors
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Validator.ValidatorExtensions.ToValidationException(NHibernate.Validator.Exceptions.InvalidStateException)">
+            <summary>
+            Constructs a ValidationException based on a NHibernate.Validator InvalidStateException
+            </summary>
+            <param name="exception">The exception received from NHibernate.Validator</param>
+            <returns>A ValidationException object</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Validator.ValidatorExtensions.ToValidationException(NHibernate.Validator.Engine.InvalidValue[])">
+            <summary>
+            Constructs a ValidationException based on NHibernate.Validator InvalidValue objects.
+            </summary>
+            <param name="errors">The errors received from NHibernate.Validator</param>
+            <returns>A ValidationException or null if there are no errors</returns>
+        </member>
+        <member name="T:Triggerfish.NHibernate.UnitOfWork">
+            <summary>
+            Encapsulates an NHibernate session and transaction
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWork.#ctor(NHibernate.ISession)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="session">A NHibernate session</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWork.Begin">
+            <summary>
+            Begins the unit of work (transaction)
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWork.End">
+            <summary>
+            Ends the unit of work (transaction). The default behaviour 
+            should be to rollback and close any sessions. Commits 
+            should only occur by explicit invocation of Commit()
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWork.Commit">
+            <summary>
+            Commits the data changes made in the unit of work (transaction)
+            </summary>
+        </member>
+        <member name="P:Triggerfish.NHibernate.UnitOfWork.Session">
+            <summary>
+            The underlying NHibernate session
+            </summary>
+        </member>
+        <member name="P:Triggerfish.NHibernate.UnitOfWork.IsActive">
+            <summary>
+            Returns trus if the unit of work is active, false if not
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.Repository`1">
+            <summary>
+            Represents an NHibernate repository fr a specific type
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.IRepository`1">
+            <summary>
+            Represents an NHibernate repository fr a specific type
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepository`1.Get(System.Int32)">
+            <summary>
+            Get an object from the objects ID
+            </summary>
+            <param name="id">Object ID</param>
+            <returns>The object</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepository`1.GetAll">
+            <summary>
+            Get a queryable list of objects
+            </summary>
+            <returns>The objects</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepository`1.Delete(`0)">
+            <summary>
+            Deletes an object from the repository
+            </summary>
+            <param name="target">the object</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepository`1.Insert(`0)">
+            <summary>
+            Inserts a new transient object into the repository
+            </summary>
+            <param name="target">The object to insert</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepository`1.Insert(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Inserts a list of new transient object into the repository
+            </summary>
+            <param name="targets">The list of objects to insert</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepository`1.Update(`0)">
+            <summary>
+            Updates an detached object. The object will be added to the current 
+            session and the database updated with the objects values
+            </summary>
+            <param name="target">The object to update</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepository`1.Update(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Updates a list of detached object. The object will be added to the current 
+            session and the database updated with the objects values
+            </summary>
+            <param name="targets">The list of objects to update</param>
+        </member>
+        <member name="P:Triggerfish.NHibernate.IRepository`1.Session">
+            <summary>
+            The NHibernate session
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.#ctor(NHibernate.ISession)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="session">A NHibernate session</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.Get(System.Int32)">
+            <summary>
+            Get an object from the objects ID
+            </summary>
+            <param name="id">Object ID</param>
+            <returns>The object</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.Get">
+            <summary>
+            Returns a repository query to use to get an object
+            </summary>
+            <returns>The query</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.GetAll">
+            <summary>
+            Get a queryable list of objects
+            </summary>
+            <returns>The objects</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.Delete(`0)">
+            <summary>
+            Deletes an object from the repository
+            </summary>
+            <param name="target">the object</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.Insert(`0)">
+            <summary>
+            Inserts a new transient object into the repository
+            </summary>
+            <param name="target">The object to insert</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.Insert(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Inserts a list of new transient object into the repository
+            </summary>
+            <param name="targets">The list of objects to insert</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.Update(`0)">
+            <summary>
+            Updates an detached object. The object will be added to the current 
+            session and the database updated with the objects values
+            </summary>
+            <param name="target">The object to update</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Repository`1.Update(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Updates a list of detached object. The object will be added to the current 
+            session and the database updated with the objects values
+            </summary>
+            <param name="targets">The list of objects to update</param>
+        </member>
+        <member name="P:Triggerfish.NHibernate.Repository`1.Session">
+            <summary>
+            The NHibernate session
+            </summary>
+        </member>
+        <member name="P:Triggerfish.NHibernate.Repository`1.Count">
+            <summary>
+            Gets the number of entities in the database table
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.SqliteDatabase">
+            <summary>
+            Sqlite database configuration
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.IDatabaseConfiguration">
+            <summary>
+            Interface for an NHibernate database configuration
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IDatabaseConfiguration.Create(System.Reflection.Assembly)">
+            <summary>
+            Returns the FluentNHibernate database configuration data
+            </summary>
+            <param name="assembly">The assembly containing the mappings</param>
+            <returns>Database configuration</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SqliteDatabase.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="path">The path and name of the SQLite database file</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SqliteDatabase.Triggerfish#NHibernate#IDatabaseConfiguration#Create(System.Reflection.Assembly)">
+            <summary>
+            Returns the FluentNHibernate Sqlite configuration data
+            </summary>
+            <param name="assembly">The assembly containing the mappings</param>
+            <returns>SQLite configuration</returns>
+        </member>
+        <member name="T:Triggerfish.NHibernate.SQLlogger">
+            <summary>
+            Logs to log4net SQL commands executed by NHibernate
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SQLlogger.Append(log4net.Core.LoggingEvent)">
+            <summary>
+            Append a logging event to the log
+            </summary>
+            <param name="loggingEvent">The logging event</param>
+        </member>
+        <member name="P:Triggerfish.NHibernate.SQLlogger.Log">
+            <summary>
+            Setter method for the stream to write the SQL commands to
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.SimpleSessionStorage">
+            <summary>
+            Stores the current UnitOfWork object
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SimpleSessionStorage.GetCurrentUnitOfWork">
+            <summary>
+            Gets the current unit of work
+            </summary>
+            <returns>The current IUnitOfWork</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SimpleSessionStorage.SetCurrentUnitOfWork(Triggerfish.Database.IUnitOfWork)">
+            <summary>
+            Sets a new unit of work as the current
+            </summary>
+            <param name="uow">A new IUnitOfWork</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SimpleSessionStorage.DeleteCurrentUnitOfWork">
+            <summary>
+            Deletes the current unit of work
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.ISchemaExporter">
+            <summary>
+            Interface for a configuration creator
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.ISchemaExporter.GenerateScript(System.Action{System.String},System.Collections.Generic.IList{System.String})">
+            <summary>
+            Generates the schema script
+            </summary>
+            <param name="scriptAction">A delegate instance to receive the generated script text</param>
+            <param name="parameterValues">Parameter values required by the exporter</param>
+        </member>
+        <member name="P:Triggerfish.NHibernate.ISchemaExporter.Name">
+            <summary>
+            The name of the exporter
+            </summary>
+        </member>
+        <member name="P:Triggerfish.NHibernate.ISchemaExporter.ParameterNames">
+            <summary>
+            Specify what string parameters are required by the exporter
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.IRepositoryQuery`1">
+            <summary>
+            An interface to a repository query
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepositoryQuery`1.ById(System.Int32)">
+            <summary>
+            Get a specific entity
+            </summary>
+            <param name="id">The id of the entity</param>
+            <returns>The amended query</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepositoryQuery`1.Where(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Get entities matching a where clause
+            </summary>
+            <param name="clause">The where clause</param>
+            <returns>The amended query</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepositoryQuery`1.With(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Eagerly gets the specified child object
+            </summary>
+            <param name="path">Child object path</param>
+            <returns>The amended query</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepositoryQuery`1.Result">
+            <summary>
+            Executes the query and returns the result
+            </summary>
+            <returns>The resultant object</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.IRepositoryQuery`1.Results">
+            <summary>
+            Executes the query and returns a list of results
+            </summary>
+            <returns>The resultant objects</returns>
+        </member>
+        <member name="T:Triggerfish.NHibernate.UnitOfWorkFactory">
+            <summary>
+            Factory class to manage UnitOfWork objects and NHibernate sessions
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.Initialise(FluentNHibernate.Cfg.FluentConfiguration,Triggerfish.Database.UnitOfWorkStorageType)">
+            <summary>
+            Initialiser method
+            </summary>
+            <param name="config">The fluent NHibernate configuration from which to build a session factory</param>
+            <param name="storageType">The storage mechanism to use</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.Initialise(FluentNHibernate.Cfg.FluentConfiguration,Triggerfish.Database.IUnitOfWorkStorage)">
+            <summary>
+            Initialiser method
+            </summary>
+            <param name="config">The fluent NHibernate configuration from which to build a session factory</param>
+            <param name="storage">The storage mechanism to use</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.Initialise(NHibernate.ISessionFactory,Triggerfish.Database.UnitOfWorkStorageType)">
+            <summary>
+            Initialiser method
+            </summary>
+            <param name="factory">The NHibernate session factory</param>
+            <param name="storageType">The storage mechanism to use</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.Initialise(NHibernate.ISessionFactory,Triggerfish.Database.IUnitOfWorkStorage)">
+            <summary>
+            Initialiser method
+            </summary>
+            <param name="factory">The NHibernate session factory</param>
+            <param name="storage">The storage mechanism to use</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.GetCurrentSession">
+            <summary>
+            Gets the current open session
+            </summary>
+            <returns>An ISession</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.GetCurrentUnitOfWork">
+            <summary>
+            Gets the current unit of work
+            </summary>
+            <returns>The current unit of work object</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.CloseCurrentUnitOfWork">
+            <summary>
+            Closes the unit of work currently open
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.Triggerfish#Database#IUnitOfWorkFactory#GetCurrentUnitOfWork">
+            <summary>
+            Gets the current unit of work
+            </summary>
+            <returns>The current unit of work object</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.UnitOfWorkFactory.Triggerfish#Database#IUnitOfWorkFactory#CloseCurrentUnitOfWork">
+            <summary>
+            Closes the unit of work currently open
+            </summary>
+        </member>
+        <member name="P:Triggerfish.NHibernate.UnitOfWorkFactory.Storage">
+            <summary>
+            Property for the UoW storage mechanism
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.NHibernateQueryableExtensions">
+            <summary>
+            Extension methods for 
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.NHibernateQueryableExtensions.With``1(NHibernate.Linq.INHibernateQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Expands the query to eagerly get the specified child object(s)
+            </summary>
+            <typeparam name="TObj">The parent object</typeparam>
+            <param name="query">The LINQ to NHibernate query</param>
+            <param name="path">Expression indicating the child property to eagerly get</param>
+            <returns>An amended INHibernateQueryable</returns>
+        </member>
+        <member name="T:Triggerfish.NHibernate.SqlServerDatabase">
+            <summary>
+            SQL Server database configuration
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SqlServerDatabase.#ctor(System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="server">The path to the server</param>
+            <param name="database">The name of the database</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.SqlServerDatabase.Triggerfish#NHibernate#IDatabaseConfiguration#Create(System.Reflection.Assembly)">
+            <summary>
+            Returns the FluentNHibernate SQL Server configuration data
+            </summary>
+            <param name="assembly">The assembly containing the mappings</param>
+            <returns>SQL Server configuration</returns>
+        </member>
+        <member name="T:Triggerfish.NHibernate.Configuration">
+            <summary>
+            NHibernate configuration
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Configuration.#ctor(Triggerfish.NHibernate.IDatabaseConfiguration)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="database">The database configuration object</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Configuration.Create``1">
+            <summary>
+            Create the configuration
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Configuration.CreateValidator">
+            <summary>
+            Create the NHibernate ValidatorEngine
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Configuration.SetValidatorEngineProperties(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Sets the properties of the NHibernate validator engine
+            </summary>
+            <param name="properties">Dictionary of properties</param>
+        </member>
+        <member name="P:Triggerfish.NHibernate.Configuration.Config">
+            <summary>
+            The FluentNHibernate configuration
+            </summary>
+        </member>
+        <member name="P:Triggerfish.NHibernate.Configuration.Validator">
+            <summary>
+            The validator engine
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.WebSessionStorage">
+            <summary>
+            Stores UnitOfWork objects in the current HttpContext
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.WebSessionStorage.GetCurrentUnitOfWork">
+            <summary>
+            Gets the current unit of work
+            </summary>
+            <returns>The current IUnitOfWork</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.WebSessionStorage.SetCurrentUnitOfWork(Triggerfish.Database.IUnitOfWork)">
+            <summary>
+            Sets a new unit of work as the current
+            </summary>
+            <param name="uow">A new IUnitOfWork</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.WebSessionStorage.DeleteCurrentUnitOfWork">
+            <summary>
+            Deletes the current unit of work
+            </summary>
+        </member>
+        <member name="T:Triggerfish.NHibernate.ExportSchema">
+            <summary>
+            Class to export a schema based on a configuration
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.ExportSchema.FromConfiguration(Triggerfish.NHibernate.Configuration,System.Action{System.String})">
+            <summary>
+            Generates the schema script
+            </summary>
+            <param name="config">The configuration from which to export the schema</param>
+            <param name="scriptAction">A delegate instance to receive the generated script text</param>
+        </member>
+        <member name="T:Triggerfish.NHibernate.Validator.Validator">
+            <summary>
+            Invokes the NHibernate.Validator validation runner
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Validator.Validator.#ctor(NHibernate.Validator.Engine.ValidatorEngine)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="engine">The NHibernate.Validator validation engine</param>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Validator.Validator.Validate(System.Object)">
+            <summary>
+            Validate the specified object. Should throw a ValidationException if the 
+            object is invalid
+            </summary>
+            <param name="obj">The object to validate</param>
+        </member>
+        <member name="T:Triggerfish.NHibernate.RepositoryQuery`1">
+            <summary>
+            An implementation of a repository query
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.RepositoryQuery`1.ById(System.Int32)">
+            <summary>
+            Get a specific entity
+            </summary>
+            <param name="id">The id of the entity</param>
+            <returns>The amended query</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.RepositoryQuery`1.Where(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Get entities matching a where clause
+            </summary>
+            <param name="clause">The where clause</param>
+            <returns>The amended query</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.RepositoryQuery`1.With(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Eagerly gets the specified child object
+            </summary>
+            <param name="path">Child object path</param>
+            <returns>The amended query</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.RepositoryQuery`1.Result">
+            <summary>
+            Executes the query and returns the result
+            </summary>
+            <returns>The resultant object</returns>
+        </member>
+        <member name="M:Triggerfish.NHibernate.RepositoryQuery`1.Results">
+            <summary>
+            Executes the query and returns a list of results
+            </summary>
+            <returns>The resultant objects</returns>
+        </member>
+    </members>
+</doc>

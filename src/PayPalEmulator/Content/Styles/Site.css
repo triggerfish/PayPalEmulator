@@ -1,0 +1,110 @@
+﻿/* reset common styles so we start at a cross-browser common denominator */
+:link,:visited { text-decoration:none }
+ul,ol { list-style:none }
+h1,h2,h3,h4,h5,h6 { font-weight: normal }
+h1,h2,h3,h4,h5,h6,pre,code { font-size:1em; }
+ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,html,body,p,blockquote,fieldset,legend { margin:0; padding:0 }
+a img,:link img,:visited img,fieldset { border:none }
+address { font-style:normal }
+
+/* html element default styles */
+body {
+	font: 1em Helvetica, Arial, sans-serif; /* 16px */
+	line-height: 1.5em;
+}
+
+a, a:visited {
+	color: Black;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #FF6A00;
+}
+
+p {
+	margin-top: 1em;
+}
+
+h1 {
+	font-size: 1.5em;
+}
+
+h2 {
+	font-size: 1.25em;
+}
+
+h1, h2, h3 {
+	margin: 1em 0 1em 0;
+}
+
+form.inline, form.inline fieldset { 
+	display: inline;
+}
+
+input { 
+	margin: 0; 
+	padding: 0.2em;
+	font-size: 1em;
+}
+
+input[type="text"] {
+	width: 15em;
+}
+
+input[type="password"] {
+	width: 15em;
+}
+
+input[type="radio"] {
+	margin-right: 0.5em;
+}
+
+table {
+	text-align: left;
+}
+
+td, th {
+	padding-right: 3em;
+}
+
+.site {
+	width:920px;
+	margin:0 auto;
+	text-align:left;
+}
+
+/* header styles */
+
+#header {
+	border-bottom: 2px solid #111;
+	padding: 1em;
+	overflow: hidden;
+}
+
+#logo {
+	float: left;
+	font-size: 2em;
+}
+
+/* content styles */
+
+#content {
+	min-height: 40em;
+}
+
+#content form {
+	margin-top: 2em;
+}
+
+#content legend {
+	color: #FF6A00;
+	font-size: 1.2em;
+	padding-bottom: 1em;
+}
+
+#content .label-col {
+	padding-right: 1em;
+	text-align: right;
+	width: 6em;
+}

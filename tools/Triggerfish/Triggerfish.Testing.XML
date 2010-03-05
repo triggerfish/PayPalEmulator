@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Triggerfish.Testing</name>
+    </assembly>
+    <members>
+        <member name="T:Triggerfish.Web.Mvc.Testing.MvcAssert">
+            <summary>
+            Asserts for use in unit testing code
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsInboundRouteValid(System.Object,System.String,System.Web.Routing.Route)">
+            <summary>
+            Tests whether the MVC generated inbound route matches the expected route values
+            </summary>
+            <param name="expectedRouteValues">The expected route values</param>
+            <param name="actualUrl">The actual url from which the route values are generated</param>
+            <param name="actualRoute">The actual route from which the route values are generated</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsInboundRouteValid(System.Web.Routing.RouteValueDictionary,System.String,System.Web.Routing.Route)">
+            <summary>
+            Tests whether the MVC generated inbound route matches the expected route values
+            </summary>
+            <param name="expectedRouteValues">The expected route values</param>
+            <param name="actualUrl">The actual url from which the route values are generated</param>
+            <param name="actualRoute">The actual route from which the route values are generated</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsInboundRouteValid(System.Object,System.String,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Tests whether the MVC generated inbound route matches the expected route values
+            </summary>
+            <param name="expectedRouteValues">The expected route values</param>
+            <param name="actualUrl">The actual url from which the route values are generated</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsInboundRouteValid(System.Web.Routing.RouteValueDictionary,System.String,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Tests whether the MVC generated inbound route matches the expected route values
+            </summary>
+            <param name="expectedRouteValues">The expected route values</param>
+            <param name="actualUrl">The actual url from which the route values are generated</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsOutboundRouteValid(System.String,System.Object,System.Web.Routing.Route)">
+            <summary>
+            Tests whether the MVC generated outbound route matches the expected url
+            </summary>
+            <param name="expectedUrl">The expected url</param>
+            <param name="actualRouteValues">The actual route values from which the url is generated</param>
+            <param name="actualRoute">The actual route from which the url is generated</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsOutboundRouteValid(System.String,System.Web.Routing.RouteValueDictionary,System.Web.Routing.Route)">
+            <summary>
+            Tests whether the MVC generated outbound route matches the expected url
+            </summary>
+            <param name="expectedUrl">The expected url</param>
+            <param name="actualRouteValues">The actual route values from which the url is generated</param>
+            <param name="actualRoute">The actual route from which the url is generated</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsOutboundRouteValid(System.String,System.Object,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Tests whether the MVC generated outbound route matches the expected url. Requires a delegate
+            to populate a route collection with all possible routes.
+            </summary>
+            <param name="expectedUrl">The expected url</param>
+            <param name="actualRouteValues">The actual route values from which the url is generated</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.MvcAssert.IsOutboundRouteValid(System.String,System.Web.Routing.RouteValueDictionary,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Tests whether the MVC generated outbound route matches the expected url. Requires a delegate
+            to populate a route collection with all possible routes.
+            </summary>
+            <param name="expectedUrl">The expected url</param>
+            <param name="actualRouteValues">The actual route values from which the url is generated</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+        </member>
+        <member name="T:Triggerfish.Web.Mvc.Testing.UrlHelpers">
+            <summary>
+            Static helper methods for processing urls
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.UrlHelpers.SanitiseUrl(System.String,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Sanitises a url and ensures the url is valid for a registered route.
+            If the route is not valid the default home url is returned ("/")
+            </summary>
+            <param name="url">The url to sanitise</param>
+            <param name="registerRoutes">The route registration delegate</param>
+            <returns>A sanitised valid url for the site</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.UrlHelpers.SanitiseUrl(System.String,System.Action{System.Web.Routing.RouteCollection},System.Boolean)">
+            <summary>
+            Sanitises a url and ensures the url is valid for a registered route.
+            If the route is not valid the default home url is returned ("/")
+            </summary>
+            <param name="url">The url to sanitise</param>
+            <param name="registerRoutes">The route registration delegate</param>
+            <param name="allowAuthoriseAttributeOnAction">Applies if the url is valid and the controller action to which the url refers has an AuthorizeAttribute. 
+            If true, the AuthorizeAttribute is allowed and the original url is returned. If false, the AuthorizeAttribute
+            is not allowed and the default home url is returned ("/")</param>
+            <returns>A sanitised valid url for the site</returns>
+        </member>
+        <member name="T:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers">
+            <summary>
+            Static helper methods to create outbound urls using the MVC framework
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundUrl(System.Object,System.Web.Routing.Route)">
+            <summary>
+            Generates an outbound url from the specified values.  
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="route">The route to use to generate the url</param>
+            <returns>The string url</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundUrl(System.Web.Routing.RouteValueDictionary,System.Web.Routing.Route)">
+            <summary>
+            Generates an outbound url from the specified values.  
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="route">The route to use to generate the url</param>
+            <returns>The string url</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundVirtualPath(System.Object,System.Web.Routing.Route)">
+            <summary>
+            Generates an outbound url from the specified values.  
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="route">The route to use to generate the url</param>
+            <returns>The virtual path data object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundVirtualPath(System.Web.Routing.RouteValueDictionary,System.Web.Routing.Route)">
+            <summary>
+            Generates an outbound url from the specified values.  
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="route">The route to use to generate the url</param>
+            <returns>The virtual path data object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundUrl(System.Object,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Generates an outbound url from the specified values.  Requires a delegate
+            to populate a route collection with all possible routes.
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+            <returns>The string url</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundUrl(System.Web.Routing.RouteValueDictionary,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Generates an outbound url from the specified values.  Requires a delegate
+            to populate a route collection with all possible routes.
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+            <returns>The string url</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundVirtualPath(System.Object,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Generates an outbound url from the specified values.  Requires a delegate
+            to populate a route collection with all possible routes.
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+            <returns>The virtual path data object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.OutboundRoutingHelpers.GenerateOutboundVirtualPath(System.Web.Routing.RouteValueDictionary,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Generates an outbound url from the specified values.  Requires a delegate
+            to populate a route collection with all possible routes.
+            </summary>
+            <param name="routeValues">The route values from which to generate the url</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+            <returns>The virtual path data object</returns>
+        </member>
+        <member name="T:Triggerfish.Web.Mvc.Testing.InboundRoutingHelpers">
+            <summary>
+            Static helper methods to create inbound urls using the MVC framework
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.InboundRoutingHelpers.GenerateInboundRoute(System.String,System.Web.Routing.Route)">
+            <summary>
+            Create inbound route values from a string url. 
+            </summary>
+            <param name="url">The url from which to generate the route</param>
+            <param name="route">The route from which to generate the route</param>
+            <returns>The route values</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.InboundRoutingHelpers.GenerateInboundRoute(System.String,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Create inbound route values from a string url. Requires a delegate
+            to populate a route collection with all possible routes.
+            </summary>
+            <param name="url">The url from which to generate the route</param>
+            <param name="registerRoutes">Delegate to register all possible routes</param>
+            <returns>The route values</returns>
+        </member>
+        <member name="T:Triggerfish.Web.Mvc.Testing.RouteInformation">
+            <summary>
+            Helper class to lookup a route based on a string url 
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformation.Create(System.String,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Static creation method
+            </summary>
+            <param name="relativeUrl">The relative url for which to get the route information</param>
+            <param name="registerRoutes">Delegate instance to register routes</param>
+            <returns>A new RouteInformation object for the url</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformation.#ctor(System.String,System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="relativeUrl">The relative url for which to get the route information</param>
+            <param name="registerRoutes">Delegate instance to register routes</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformation.DoesActionRequireAuthorisation">
+            <summary>
+            Tests whether the route action requires authorization to be invoked, i.e. it is 
+            decorated with the AuthorizeAttribute
+            </summary>
+            <returns>true if the action requires authorisation, false otherwise</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformation.DoesActionRequireAuthorisation(System.Reflection.Assembly)">
+            <summary>
+            Tests whether the route action requires authorization to be invoked, i.e. it is 
+            decorated with the AuthorizeAttribute
+            </summary>
+            <param name="callingAssembly">The calling assembly that contains the controller class</param>
+            <returns>true if the action requires authorisation, false otherwise</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformation.IsActionOnController(System.String)">
+            <summary>
+            Tests whether or not the action method is on the specified controller class
+            </summary>
+            <param name="controller">The name of the controller</param>
+            <returns>true if the action method is in the controller class, false otherwise</returns>
+        </member>
+        <member name="P:Triggerfish.Web.Mvc.Testing.RouteInformation.Url">
+            <summary>
+            Property to get the Url with which this object was constructed
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.Mvc.Testing.RouteInformation.Valid">
+            <summary>
+            Test whether or not the url specifies a valid route
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.Mvc.Testing.RouteInformation.RouteValues">
+            <summary>
+            Get the RouteDataDictionary containing the route values
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.Mvc.Testing.RouteInformation.Controller">
+            <summary>
+            Gets the name of the controller to which this route belongs
+            </summary>
+            <value>
+            The returned value excludes the Controller suffix: for example, it will return 
+            "Authentication", not "AuthenticationController"
+            </value>
+        </member>
+        <member name="P:Triggerfish.Web.Mvc.Testing.RouteInformation.Action">
+            <summary>
+            Gets the name of the action invoked by this route
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Web.Testing.MockExtensions">
+            <summary>
+            Extension methods to add further mocking behaviour
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockExtensions.WithSession(Moq.Mock{System.Web.HttpContextBase},Moq.Mock{System.Web.HttpSessionStateBase})">
+            <summary>
+            Adds a mock session to a mock context
+            </summary>
+            <param name="context">The context mock</param>
+            <param name="session">The session mock</param>
+            <returns>The updated context mock</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockExtensions.WithUser(Moq.Mock{System.Web.HttpContextBase},Moq.Mock{System.Security.Principal.IPrincipal})">
+            <summary>
+            Adds a user to the context mock
+            </summary>
+            <param name="context">The context mock</param>
+            <param name="user">The user mock</param>
+            <returns>The updated context mock</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockExtensions.WithObject(Moq.Mock{System.Web.HttpSessionStateBase},System.String,System.Object)">
+            <summary>
+            Updates a session with cached object
+            </summary>
+            <param name="session">The session mock</param>
+            <param name="key">The key into the session</param>
+            <param name="obj">The object to store under the key</param>
+            <returns>The updated session mock</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockExtensions.WithIdentity(Moq.Mock{System.Security.Principal.IPrincipal},Moq.Mock{System.Security.Principal.IIdentity})">
+            <summary>
+            Updates a user mock with an identity mock 
+            </summary>
+            <param name="user">The user mock</param>
+            <param name="identity">The identity mock</param>
+            <returns>The updated user mock</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockExtensions.WithName(Moq.Mock{System.Security.Principal.IIdentity},System.String)">
+            <summary>
+            Updates an identity mock with the users name
+            </summary>
+            <param name="identity">The identity mock</param>
+            <param name="name">The users name</param>
+            <returns>The identity user mock</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockExtensions.WithAuthenticationStatus(Moq.Mock{System.Security.Principal.IIdentity},System.Boolean)">
+            <summary>
+            Updates an identity mock with the authentication status
+            </summary>
+            <param name="identity">The identity mock</param>
+            <param name="authenticated">true if authenticated, false if not</param>
+            <returns>The identity user mock</returns>
+        </member>
+        <member name="T:Triggerfish.Web.Testing.MockHelpers">
+            <summary>
+            Helpers for mocking objects
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockHelpers.HttpContext(System.String)">
+            <summary>
+            Create a mock HttpContext object
+            </summary>
+            <param name="url">The url that initiated the HttpContext (can be null)</param>
+            <returns>The http context mock object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockHelpers.Session">
+            <summary>
+            Creates a mock object for a http session
+            </summary>
+            <returns>The mock object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockHelpers.User">
+            <summary>
+            Creates a mock object for a user
+            </summary>
+            <returns>The mock object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Testing.MockHelpers.Identity">
+            <summary>
+            Creates a mock object for an identity
+            </summary>
+            <returns>The mock object</returns>
+        </member>
+        <member name="T:Triggerfish.Web.Routing.Testing.RoutingAssert">
+            <summary>
+            Assert methods for use in unit test projects
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Routing.Testing.RoutingAssert.AreDictionariesEqual(System.Web.Routing.RouteValueDictionary,System.Web.Routing.RouteValueDictionary)">
+            <summary>
+            Tests whether two RouteValueDictionary objects have equal values
+            </summary>
+            <param name="expected">The expected values</param>
+            <param name="actual">The actual values</param>
+        </member>
+        <member name="T:Triggerfish.Web.Mvc.Testing.RouteInformationExtensions">
+            <summary>
+            Static helper methods for processing urls
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformationExtensions.SanitiseUrl(Triggerfish.Web.Mvc.Testing.RouteInformation)">
+            <summary>
+            Sanitises a url and ensures the url is valid for a registered route.
+            If the route is not valid the default home url is returned ("/")
+            </summary>
+            <param name="ri">The RouteInformation object</param>
+            <returns>A sanitised valid url for the site</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformationExtensions.SanitiseUrl(Triggerfish.Web.Mvc.Testing.RouteInformation,System.Boolean)">
+            <summary>
+            Sanitises a url and ensures the url is valid for a registered route.
+            If the route is not valid the default home url is returned ("/")
+            </summary>
+            <param name="ri">The RouteInformation object</param>
+            <param name="allowAuthoriseAttributeOnAction">Applies if the url is valid and the controller action to which the url refers has an AuthorizeAttribute. 
+            If true, the AuthorizeAttribute is allowed and the original url is returned. If false, the AuthorizeAttribute
+            is not allowed and the default home url is returned ("/")</param>
+            <returns>A sanitised valid url for the site</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.RouteInformationExtensions.SanitiseUrl(Triggerfish.Web.Mvc.Testing.RouteInformation,System.Boolean,System.Reflection.Assembly)">
+            <summary>
+            Sanitises a url and ensures the url is valid for a registered route.
+            If the route is not valid the default home url is returned ("/")
+            </summary>
+            <param name="ri">The RouteInformation object</param>
+            <param name="allowAuthoriseAttributeOnAction">Applies if the url is valid and the controller action to which the url refers has an AuthorizeAttribute. 
+            If true, the AuthorizeAttribute is allowed and the original url is returned. If false, the AuthorizeAttribute
+            is not allowed and the default home url is returned ("/")</param>
+            <param name="callingAssembly">The assembly with the controller/action</param>
+            <returns>A sanitised valid url for the site</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,559 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Triggerfish</name>
+    </assembly>
+    <members>
+        <member name="T:Triggerfish.Linq.EnumerableExtensions">
+            <summary>
+            Extension methods for IEnumerable
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Linq.EnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Iterates over each element in the IEnumerable and invokes the
+            delegate instance on it
+            </summary>
+            <typeparam name="T">The IEnumerable data type</typeparam>
+            <param name="list">The IEnumerable list of objects</param>
+            <param name="action">The delegate instance to invoke on each element</param>
+        </member>
+        <member name="T:Triggerfish.Linq.PropertyPathVisitor">
+            <summary>
+            A visitor class to build a path to a class property (eg class.Child.Grandchild.Member)
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Linq.ExpressionVisitor">
+            <summary>
+            A visitor class to crawl over each node in an expression tree
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Linq.ExpressionVisitor.Visit(System.Linq.Expressions.Expression)">
+            <summary>
+            Visits a node in the expression tree and recurses into 
+            child nodes where they exist
+            </summary>
+            <param name="exp">The expression</param>
+        </member>
+        <member name="M:Triggerfish.Linq.ExpressionVisitor.VisitLambda(System.Linq.Expressions.LambdaExpression)">
+            <summary>
+            Override to perform custom processing for a lambda expression
+            </summary>
+            <param name="lambda">A lambda expression</param>
+        </member>
+        <member name="M:Triggerfish.Linq.ExpressionVisitor.VisitMethodCall(System.Linq.Expressions.MethodCallExpression)">
+            <summary>
+            Override to perform custom processing for a method call expression
+            </summary>
+            <param name="method">A method call expression</param>
+        </member>
+        <member name="M:Triggerfish.Linq.ExpressionVisitor.VisitMemberAccess(System.Linq.Expressions.MemberExpression)">
+            <summary>
+            Override to perform custom processing for a method access expression
+            </summary>
+            <param name="member">A method access expression</param>
+        </member>
+        <member name="M:Triggerfish.Linq.PropertyPathVisitor.VisitMethodCall(System.Linq.Expressions.MethodCallExpression)">
+            <summary>
+            Override to perform custom processing for a method call expression
+            </summary>
+            <param name="method">A method call expression</param>
+        </member>
+        <member name="M:Triggerfish.Linq.PropertyPathVisitor.VisitMemberAccess(System.Linq.Expressions.MemberExpression)">
+            <summary>
+            Override to perform custom processing for a method access expression
+            </summary>
+            <param name="member">A method access expression</param>
+        </member>
+        <member name="P:Triggerfish.Linq.PropertyPathVisitor.Path">
+            <summary>
+            Returns the full path to the property
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Database.Entity`1">
+            <summary>
+            Abstract class to represent a database entity with a
+            primary key
+            </summary>
+            <typeparam name="TId">The primary key type</typeparam>
+        </member>
+        <member name="M:Triggerfish.Database.Entity`1.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Database.Entity`1.#ctor(`0)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="id">The primary key value</param>
+        </member>
+        <member name="M:Triggerfish.Database.Entity`1.Equals(Triggerfish.Database.Entity{`0})">
+            <summary>
+            Compare this entity to another based on matching primary keys
+            </summary>
+            <param name="rhs">The other entity</param>
+            <returns>True if equal, false otherwise</returns>
+        </member>
+        <member name="M:Triggerfish.Database.Entity`1.Equals(System.Object)">
+            <summary>
+            Compare this entity to another object based 
+            on that object being an entity and matching primary keys
+            </summary>
+            <param name="rhs">The other object</param>
+            <returns>True if equal, false otherwise</returns>
+        </member>
+        <member name="M:Triggerfish.Database.Entity`1.GetHashCode">
+            <summary>
+            Get the hash code for this entity
+            </summary>
+            <returns>A unique integer for this entity</returns>
+        </member>
+        <member name="P:Triggerfish.Database.Entity`1.Id">
+            <summary>
+            Accessor to the primary key value
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Database.IUnitOfWorkFactory">
+            <summary>
+            Interface for a unit of work store
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWorkFactory.GetCurrentUnitOfWork">
+            <summary>
+            Gets the current unit of work
+            </summary>
+            <returns>The current IUnitOfWork</returns>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWorkFactory.CloseCurrentUnitOfWork">
+            <summary>
+            Closes the current unit of work
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Currency">
+            <summary>
+            Helper methods for converting to pounds and pence
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Currency.RoundToPoundsAndPence(System.Decimal,Triggerfish.RoundDirection)">
+            <summary>
+            Converts a raw decimal pounds and pence amount to the nearest penny
+            </summary>
+            <param name="rawPoundsAndPence">Raw decimal pounds and pence value</param>
+            <param name="direction">Whether to round down or up to the nearest penny</param>
+            <returns>The number of whole pounds and pennies</returns>
+        </member>
+        <member name="M:Triggerfish.Currency.ToPoundsAndPence(System.Decimal)">
+            <summary>
+            Converts a raw decimal pence amount into pounds and pence
+            </summary>
+            <param name="rawPence">Raw decimal pence amount</param>
+            <returns>The number of whole pounds and pennies</returns>
+        </member>
+        <member name="M:Triggerfish.Currency.ToPence(System.Decimal,Triggerfish.RoundDirection)">
+            <summary>
+            Converts a raw decimal pounds and pence to pennies
+            </summary>
+            <param name="rawPoundsAndPence">Raw decimal pounds and pence value</param>
+            <param name="direction">Whether to round down or up to the nearest penny</param>
+            <returns>The number of whole pennies in the amount</returns>
+        </member>
+        <member name="T:Triggerfish.Validator.ValidationException">
+            <summary>
+            Generic class for handling validation exceptions
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Validator.ValidationException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Validator.ValidationException.#ctor(System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="key">The source of the error</param>
+            <param name="value">The error message</param>
+        </member>
+        <member name="P:Triggerfish.Validator.ValidationException.Errors">
+            <summary>
+            A collection of errors. Key is the name of the source of the error
+            and the value is the error message
+            </summary>
+        </member>
+        <member name="T:BCrypt">
+            <summary>BCrypt implements OpenBSD-style Blowfish password hashing
+            using the scheme described in "A Future-Adaptable Password Scheme"
+            by Niels Provos and David Mazieres.</summary>
+            <remarks>
+            <para>This password hashing system tries to thwart offline
+            password cracking using a computationally-intensive hashing
+            algorithm, based on Bruce Schneier's Blowfish cipher. The work
+            factor of the algorithm is parametized, so it can be increased as
+            computers get faster.</para>
+            <para>To hash a password for the first time, call the
+            <c>HashPassword</c> method with a random salt, like this:</para>
+            <code>
+            string hashed = BCrypt.HashPassword(plainPassword, BCrypt.GenerateSalt());
+            </code>
+            <para>To check whether a plaintext password matches one that has
+            been hashed previously, use the <c>CheckPassword</c> method:</para>
+            <code>
+            if (BCrypt.CheckPassword(candidatePassword, storedHash)) {
+                Console.WriteLine("It matches");
+            } else {
+                Console.WriteLine("It does not match");
+            }
+            </code>
+            <para>The <c>GenerateSalt</c> method takes an optional parameter
+            (logRounds) that determines the computational complexity of the
+            hashing:</para>
+            <code>
+            string strongSalt = BCrypt.GenerateSalt(10);
+            string strongerSalt = BCrypt.GenerateSalt(12);
+            </code>
+            <para>
+            The amount of work increases exponentially (2**log_rounds), so
+            each increment is twice as much work. The default log_rounds is
+            10, and the valid range is 4 to 31.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:BCrypt.EncodeBase64(System.Byte[],System.Int32)">
+            <summary>Encode a byte array using bcrypt's slightly-modified
+            Base64 encoding scheme. Note that this is _not_ compatible
+            with the standard MIME-Base64 encoding.</summary>
+            <param name="d">The byte array to encode</param>
+            <param name="length">The number of bytes to encode</param>
+            <returns>A Base64-encoded string</returns>
+        </member>
+        <member name="M:BCrypt.Char64(System.Char)">
+            <summary>Look up the 3 bits base64-encoded by the specified
+            character, range-checking against the conversion
+            table.</summary>
+            <param name="c">The Base64-encoded value</param>
+            <returns>The decoded value of <c>x</c></returns>
+        </member>
+        <member name="M:BCrypt.DecodeBase64(System.String,System.Int32)">
+            <summary>Decode a string encoded using BCrypt's Base64 scheme to a
+            byte array. Note that this is _not_ compatible with the standard
+            MIME-Base64 encoding.</summary>
+            <param name="s">The string to decode</param>
+            <param name="maximumLength">The maximum number of bytes to decode</param>
+            <returns>An array containing the decoded bytes</returns>
+        </member>
+        <member name="M:BCrypt.Encipher(System.UInt32[],System.Int32)">
+            <summary>
+            Blowfish encipher a single 64-bit block encoded as two 32-bit
+            halves.
+            </summary>
+            <param name="block">An array containing the two 32-bit half
+            blocks.</param>
+            <param name="offset">The position in the array of the
+            blocks.</param>
+        </member>
+        <member name="M:BCrypt.StreamToWord(System.Byte[],System.Int32@)">
+            <summary>
+            Cycically extract a word of key material.
+            </summary>
+            <param name="data">The string to extract the data
+            from.</param>
+            <param name="offset">The current offset into data.</param>
+            <returns>The next work of material from data.</returns>
+        </member>
+        <member name="M:BCrypt.InitKey">
+            <summary>
+            Initialize the Blowfish key schedule.
+            </summary>
+        </member>
+        <member name="M:BCrypt.Key(System.Byte[])">
+            <summary>
+            Key the Blowfish cipher.
+            </summary>
+            <param name="key">An array containing the key.</param>
+        </member>
+        <member name="M:BCrypt.EksKey(System.Byte[],System.Byte[])">
+            <summary>
+            Perform the "enhanced key schedule" step described by Provos
+            and Mazieres in "A Future-Adaptable Password Scheme"
+            (http://www.openbsd.org/papers/bcrypt-paper.ps).
+            </summary>
+            <param name="data">Salt information.</param>
+            <param name="key">Password information.</param>
+        </member>
+        <member name="M:BCrypt.CryptRaw(System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            Perform the central password hashing step in the bcrypt
+            scheme.
+            </summary>
+            <param name="password">The password to hash.</param>
+            <param name="salt">The binary salt to hash with the
+            password.</param>
+            <param name="logRounds">The binary logarithm of the number of
+            rounds of hashing to apply.</param>
+            <returns>An array containing the binary hashed password.</returns>
+        </member>
+        <member name="M:BCrypt.HashPassword(System.String,System.String)">
+            <summary>
+            Hash a password using the OpenBSD bcrypt scheme.
+            </summary>
+            <param name="password">The password to hash.</param>
+            <param name="salt">The salt to hash with (perhaps generated
+            using <c>BCrypt.GenerateSalt</c>).</param>
+            <returns>The hashed password.</returns>
+        </member>
+        <member name="M:BCrypt.GenerateSalt(System.Int32)">
+            <summary>
+            Generate a salt for use with the BCrypt.HashPassword() method.
+            </summary>
+            <param name="logRounds">The log2 of the number of rounds of
+            hashing to apply. The work factor therefore increases as (2 **
+            logRounds).</param>
+            <returns>An encoded salt value.</returns>
+        </member>
+        <member name="M:BCrypt.GenerateSalt">
+            <summary>
+            Generate a salt for use with the <c>BCrypt.HashPassword()</c>
+            method, selecting a reasonable default for the number of hashing
+            rounds to apply.
+            </summary>
+            <returns>An encoded salt value.</returns>
+        </member>
+        <member name="M:BCrypt.CheckPassword(System.String,System.String)">
+            <summary>
+            Check that a plaintext password matches a previously hashed
+            one.
+            </summary>
+            <param name="plaintext">The plaintext password to verify.</param>
+            <param name="hashed">The previously hashed password.</param>
+            <returns><c>true</c> if the passwords, <c>false</c>
+            otherwise.</returns>
+        </member>
+        <member name="T:Triggerfish.Database.IUnitOfWork">
+            <summary>
+            Interface for a unit of work, i.e. a transaction
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWork.Begin">
+            <summary>
+            Begins the unit of work (transaction)
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWork.End">
+            <summary>
+            Ends the unit of work (transaction). The default behaviour 
+            should be to rollback and close any sessions. Commits 
+            should only occur by explicit invocation of Commit()
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWork.Commit">
+            <summary>
+            Commits the data changes made in the unit of work (transaction)
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Database.IUnitOfWork.IsActive">
+            <summary>
+            Returns trus if the unit of work is active, false if not
+            </summary>
+        </member>
+        <member name="T:Triggerfish.RoundDirection">
+            <summary>
+            Enum specifiying which direction to round a number
+            </summary>
+        </member>
+        <member name="F:Triggerfish.RoundDirection.Up">
+            <summary>
+            Round up
+            </summary>
+        </member>
+        <member name="F:Triggerfish.RoundDirection.Down">
+            <summary>
+            Round down
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Maths">
+            <summary>
+            Helper maths methods
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Maths.RoundToNearest(System.Int32,System.Int32,Triggerfish.RoundDirection)">
+            <summary>
+            Rounds a number to the nearest multiple
+            </summary>
+            <param name="number">The number to round</param>
+            <param name="multiple">The multiple to round to</param>
+            <param name="direction">The direction to round</param>
+            <returns>A rounded number</returns>
+        </member>
+        <member name="M:Triggerfish.Maths.ToBasisPoints(System.Decimal)">
+            <summary>
+            Converts a percentage to basis points (hundredths of percent)
+            </summary>
+            <param name="percentage">The percentage</param>
+            <returns>The number of basis points</returns>
+        </member>
+        <member name="M:Triggerfish.Maths.ToPercentage(System.Int32)">
+            <summary>
+            Converts basis points (hundredths of a percent) to a percentage
+            </summary>
+            <param name="basisPoints">The number of basis points</param>
+            <returns>The precentage</returns>
+        </member>
+        <member name="M:Triggerfish.Maths.ToPercentageMultiplier(System.Int32)">
+            <summary>
+            Converts basis points (hundredths of a percent) to a percentage
+            multiplier that can be applied directly to an amount
+            e.g. 5000bp = 50% = 0.5 multiplier
+            </summary>
+            <param name="basisPoints">The number of basis points</param>
+            <returns>The precentage multiplier</returns>
+        </member>
+        <member name="T:Triggerfish.Collections.Generic.IReadOnlyList`1">
+            <summary>
+            Interface for a read only list
+            </summary>
+            <typeparam name="T">The type of object the list contains</typeparam>
+        </member>
+        <member name="M:Triggerfish.Collections.Generic.IReadOnlyList`1.Contains(`0)">
+            <summary>
+            Tests if the list contains a specific item
+            </summary>
+            <param name="item">The item to test for</param>
+            <returns>True if the list contains the item, false otherwise</returns>
+        </member>
+        <member name="M:Triggerfish.Collections.Generic.IReadOnlyList`1.IndexOf(`0)">
+            <summary>
+            Gets the index of a specific item in the list
+            </summary>
+            <param name="item">The item to lookup</param>
+            <returns>The index into the list</returns>
+        </member>
+        <member name="P:Triggerfish.Collections.Generic.IReadOnlyList`1.Count">
+            <summary>
+            Returns the number of items in the list
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Collections.Generic.IReadOnlyList`1.Item(System.Int32)">
+            <summary>
+            List indexer property
+            </summary>
+            <param name="index">The index in the list</param>
+            <returns>The item at the specified index</returns>
+        </member>
+        <member name="T:Triggerfish.Database.IUnitOfWorkStorage">
+            <summary>
+            Interface for a unit of work store
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWorkStorage.GetCurrentUnitOfWork">
+            <summary>
+            Gets the current unit of work
+            </summary>
+            <returns>The current IUnitOfWork</returns>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWorkStorage.SetCurrentUnitOfWork(Triggerfish.Database.IUnitOfWork)">
+            <summary>
+            Sets a new unit of work as the current
+            </summary>
+            <param name="uow">A new IUnitOfWork</param>
+        </member>
+        <member name="M:Triggerfish.Database.IUnitOfWorkStorage.DeleteCurrentUnitOfWork">
+            <summary>
+            Deletes the current unit of work
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Collections.Generic.List`1">
+            <summary>
+            Custom List implementation providing a read only interface
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Triggerfish.Collections.Generic.List`1.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Collections.Generic.List`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="collection">Collection of items to initialise the list with</param>
+        </member>
+        <member name="M:Triggerfish.Collections.Generic.List`1.#ctor(System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="capacity">The initial list capacity</param>
+        </member>
+        <member name="T:Triggerfish.Security.IEncryptor">
+            <summary>
+            Interface to encrypt a string
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Security.IEncryptor.Encrypt(System.String)">
+            <summary>
+            Encrypt the plaintext string
+            </summary>
+            <param name="plainText">The plaintext string</param>
+            <returns>The encryted string</returns>
+        </member>
+        <member name="M:Triggerfish.Security.IEncryptor.IsMatch(System.String,System.String)">
+            <summary>
+            Tests whether the plaintext string is equal to a text
+            string that is encrypted
+            </summary>
+            <param name="plainText">The plaintext</param>
+            <param name="encryptedText">The encrypted text</param>
+            <returns>True if the strings match, false otherwise</returns>
+        </member>
+        <member name="T:Triggerfish.Validator.IValidator">
+            <summary>
+            Interface for a validator
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Validator.IValidator.Validate(System.Object)">
+            <summary>
+            Validate the specified object. Should throw a ValidationException if the 
+            object is invalid
+            </summary>
+            <param name="obj">The object to validate</param>
+        </member>
+        <member name="T:Triggerfish.Security.BCryptEncryptor">
+            <summary>
+            Encrypter interface implementation using the BCrypt algorithm
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Security.BCryptEncryptor.Encrypt(System.String)">
+            <summary>
+            Encrypt the plaintext string
+            </summary>
+            <param name="plainText">The plaintext string</param>
+            <returns>The encryted string</returns>
+        </member>
+        <member name="M:Triggerfish.Security.BCryptEncryptor.IsMatch(System.String,System.String)">
+            <summary>
+            Tests whether the plaintext string is equal to a text
+            string that is encrypted
+            </summary>
+            <param name="plainText">The plaintext</param>
+            <param name="encryptedText">The encrypted text</param>
+            <returns>True if the strings match, false otherwise</returns>
+        </member>
+        <member name="T:Triggerfish.Database.UnitOfWorkStorageType">
+            <summary>
+            Specifies which storage type is used for the current 
+            unit of work object
+            </summary>
+        </member>
+        <member name="F:Triggerfish.Database.UnitOfWorkStorageType.Simple">
+            <summary>
+            Stores the unit of work in an internal reference
+            </summary>
+        </member>
+        <member name="F:Triggerfish.Database.UnitOfWorkStorageType.Web">
+            <summary>
+            Stores the unit of work in the current HttpContext
+            </summary>
+        </member>
+    </members>
+</doc>

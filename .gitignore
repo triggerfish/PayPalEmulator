@@ -1,0 +1,10 @@
+bin
+obj
+TestResults
+*.cache
+*~
+*.suo
+*.user
+*.log
+*.bak
+.#*.*

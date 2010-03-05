@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayPalEmulator", "PayPalEmulator\PayPalEmulator.csproj", "{AFAB1200-941C-4452-8452-3059D0D3017B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayPalEmulator.Tests", "PayPalEmulator.Tests\PayPalEmulator.Tests.csproj", "{EBD0F48F-5D24-4A34-887C-49FBD4188D91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C450A357-D170-4313-A862-432B6A012EF1}"
+	ProjectSection(SolutionItems) = preProject
+		PayPalEmulator.vsmdi = PayPalEmulator.vsmdi
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = PayPalEmulator.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFAB1200-941C-4452-8452-3059D0D3017B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFAB1200-941C-4452-8452-3059D0D3017B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFAB1200-941C-4452-8452-3059D0D3017B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFAB1200-941C-4452-8452-3059D0D3017B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD0F48F-5D24-4A34-887C-49FBD4188D91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD0F48F-5D24-4A34-887C-49FBD4188D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD0F48F-5D24-4A34-887C-49FBD4188D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD0F48F-5D24-4A34-887C-49FBD4188D91}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
