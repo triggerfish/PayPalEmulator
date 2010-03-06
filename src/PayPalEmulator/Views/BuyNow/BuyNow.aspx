@@ -4,18 +4,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Make Payment</h2>
-    <p>Post variables:</p>
-    <table>
-    <tbody>
-    <% foreach (string key in Request.Form.AllKeys) { %>
-        <tr>
-            <td><%= key %></td>
-            <td><%= Request.Form[key] %></td>
-        </tr>
-    <% } %>
-    </tbody>
-    </table>
-
+    <% Html.RenderPartial("PostParams"); %>
     <% using (Html.BeginForm("PayNow", "Payment")) { %>
         <fieldset>
             <%= Html.Hidden("pdtId", Model.PDT.Id)%>

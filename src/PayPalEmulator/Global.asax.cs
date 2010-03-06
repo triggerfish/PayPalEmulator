@@ -22,15 +22,9 @@ namespace PayPalEmulator
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			routes.MapRoute(
-				"",														// Route name
-				"make-payment",											// URL with parameters
-				new { controller = "Payment", action = "MakePayment" }  // Parameter defaults
-			);
-
-			routes.MapRoute(
 				"",												// Route name
-				"paid",											// URL with parameters
-				new { controller = "Payment", action = "Paid" }	// Parameter defaults
+				"cgi-bin/webscr",								// URL with parameters
+				new { controller = "Cgi", action = "Index" }	// Parameter defaults
 			);
 
 			routes.MapRoute(
@@ -54,7 +48,6 @@ namespace PayPalEmulator
 			RegisterAllControllersIn("PayPalEmulator");
 
 			RegisterRoutes(RouteTable.Routes);
-			ModelBinders.Binders.DefaultBinder = new BinderResolver(ObjectFactory.TryGet<IModelBinder>);
 		}
 
 		protected override IKernel CreateKernel()

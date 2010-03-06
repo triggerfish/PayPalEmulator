@@ -6,12 +6,13 @@ using System.Web.Mvc;
 using Triggerfish.Linq;
 using Triggerfish.Validator;
 using Triggerfish;
+using System.Collections.Specialized;
 
 namespace PayPalEmulator
 {
-	public class PDTbinder : ModelBinder<PDT>
+	public class BuyNowBinder : PostBinder<PDT>
 	{
-		protected override object Bind()
+		protected override PDT Bind()
 		{
 			PDT pdt = new PDT();
 			pdt.AuthToken = GetValue("emulator_authToken", true);

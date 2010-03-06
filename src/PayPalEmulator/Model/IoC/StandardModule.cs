@@ -37,8 +37,12 @@ namespace PayPalEmulator
 				.ToSelf();
 
 			// binders
-			Bind<ModelBinder<PDT>>()
-				.To<PDTbinder>();
+			Bind<ICgiHandler>()
+				.To<BuyNowClickHandler>()
+				.Named("_xclick");
+			Bind<ICgiHandler>()
+				.To<AuthorisePdtHandler>()
+				.Named("_notify-synch");
 		}
 	}
 }

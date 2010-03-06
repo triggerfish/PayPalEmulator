@@ -9,23 +9,19 @@ using Triggerfish.NHibernate;
 namespace PayPalEmulator.Controllers
 {
 	[HandleError]
-	public class PaymentController : Controller
+	public class BuyNowController : Controller
 	{
 		private Repository<PDT> m_pdtRepository;
 
-		public PaymentController(Repository<PDT> pdtRepository)
+		public BuyNowController(Repository<PDT> pdtRepository)
 		{
 			m_pdtRepository = pdtRepository;
 		}
 
-		[AcceptVerbs(HttpVerbs.Post)]
-		[Transaction]
-		public ViewResult MakePayment(PDT pdt)
+		[AcceptVerbs(HttpVerbs.Get)]
+		public ViewResult BuyNow(int pdtId)
 		{
-			if (!ModelState.IsValid)
-			{
-				return View("Error", new HandleErrorInfo(new ErrorDataException(ModelState), "Payment", "MakePayment"));
-			}
+			PDT pdt = GetPdt(pdtId);
 
 			m_pdtRepository.Insert(pdt);
 
@@ -36,13 +32,7 @@ namespace PayPalEmulator.Controllers
 		[Transaction]
 		public ActionResult PayNow(int pdtId)
 		{
-			PDT pdt = m_pdtRepository.Get(pdtId);
-
-			if (null == pdt)
-			{
-				ModelState.AddModelError("pdtId", String.Format("Invalid ID: {0}", pdtId));
-				throw new ErrorDataException(ModelState);
-			}
+			PDT pdt = GetPdt(pdtId);
 
 			pdt.Tx = Regex.Replace(Guid.NewGuid().ToString(), "-", String.Empty);
 			pdt.State = "Completed";
@@ -53,14 +43,22 @@ namespace PayPalEmulator.Controllers
 		[AcceptVerbs(HttpVerbs.Get)]
 		public ViewResult Paid(int pdtId)
 		{
-			PDT pdt = m_pdtRepository.Get(pdtId);
+			PDT pdt = GetPdt(pdtId);
+
+			return View(new PaymentViewData { PDT = pdt });
+		}
+
+		private PDT GetPdt(int id)
+		{
+			PDT pdt = m_pdtRepository.Get(id);
 
 			if (null == pdt)
 			{
-				return View("Error", new HandleErrorInfo(new ErrorDataException(ModelState), "Payment", "MakePayment"));
+				ModelState.AddModelError("pdtId", String.Format("Invalid ID: {0}", id));
+				throw new ErrorDataException(ModelState);
 			}
 
-			return View(new PaymentViewData { PDT = pdt });
+			return pdt;
 		}
 	}
 }

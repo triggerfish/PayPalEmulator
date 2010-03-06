@@ -107,17 +107,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\Binders\BinderResolver.cs" />
+    <Compile Include="Code\Binders\PdtVerificationBinder.cs" />
+    <Compile Include="Code\Binders\PostBinder.cs" />
+    <Compile Include="Code\CgiHandlers\BuyNowClickHandler.cs" />
+    <Compile Include="Code\CgiHandlers\AuthorisePdtHandler.cs" />
+    <Compile Include="Code\CgiHandlers\ICgiHandler.cs" />
     <Compile Include="Code\ErrorDataException.cs" />
+    <Compile Include="Code\Helpers\PostSubmitter.cs" />
     <Compile Include="Code\Helpers\QueryString.cs" />
-    <Compile Include="Code\Binders\ModelBinder.cs" />
-    <Compile Include="Code\Binders\PDTbinder.cs" />
+    <Compile Include="Code\Binders\BuyNowBinder.cs" />
     <Compile Include="Code\Filters\TransactionAttribute.cs" />
+    <Compile Include="Controllers\CgiController.cs" />
     <Compile Include="Model\FluentMappings\PDTmap.cs" />
     <Compile Include="Model\IoC\StandardModule.cs" />
     <Compile Include="Model\Entities\PDT.cs" />
     <Compile Include="Code\ViewData\PaymentViewData.cs" />
-    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\BuyNowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -132,8 +137,10 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Views\Payment\MakePayment.aspx" />
-    <Content Include="Views\Payment\Paid.aspx" />
+    <Content Include="Views\CGi\Index.aspx" />
+    <Content Include="Views\BuyNow\BuyNow.aspx" />
+    <Content Include="Views\BuyNow\Paid.aspx" />
+    <Content Include="Views\Shared\PostParams.ascx" />
     <Content Include="Web.config" />
     <Content Include="Content\Styles\Site.css" />
     <Content Include="Content\Scripts\jquery-1.3.2.js" />

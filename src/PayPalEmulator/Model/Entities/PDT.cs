@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Triggerfish.Database;
+using System.Text;
 
 namespace PayPalEmulator
 {

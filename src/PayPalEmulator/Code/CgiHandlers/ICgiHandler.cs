@@ -5,10 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using Triggerfish.Validator;
 using Triggerfish.Ninject;
+using System.Collections.Specialized;
+using System.Text;
 
 namespace PayPalEmulator
 {
-	public abstract class ModelBinder<T> : Triggerfish.Web.Mvc.ModelBinder<T> where T : class
+	public interface ICgiHandler
 	{
+		ActionResult Process(HttpRequestBase request, ModelStateDictionary modelState);
 	}
 }

@@ -12,48 +12,50 @@ using Triggerfish.NHibernate;
 namespace PayPalEmulator.Tests.Controllers
 {
 	[TestClass]
-	public class PaymentControllerTest : DatabaseTest
+	public class BuyNowControllerTest : DatabaseTest
 	{
 		private Repository<PDT> m_repository;
 
 		[TestMethod]
-		public void ShouldDisplayMakePayment()
+		public void ShouldDisplayBuyNow()
 		{
 			// Arrange
-			PaymentController controller = new PaymentController(m_repository);
-
-			PDT pdt = new PDT { Amount = "12.55", AuthToken = "fsd7ds876786fsd86", Currency = "GBP", Custom = "fsfsfsfsfeewr", ReturnUrl = "http://www.testing.com/here" };
+			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
-			ViewResult result = controller.MakePayment(pdt) as ViewResult;
+			ViewResult result = controller.BuyNow(1);
 
 			// Assert
 			Assert.AreEqual("", result.ViewName);
 			Assert.IsTrue(result.ViewData.Model is PaymentViewData);
 			Assert.AreNotEqual(null, ((PaymentViewData)result.ViewData.Model).PDT);
-			Assert.AreEqual(2, pdt.Id);
 		}
 
 		[TestMethod]
-		public void ShouldDisplayErrorIfBindingFailure()
+		public void ShouldThrowFromBuyNowIfInvalidId()
 		{
 			// Arrange
-			PaymentController controller = new PaymentController(m_repository);
-			controller.ModelState.AddModelError("Amount", "Error");
+			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
-			ViewResult result = controller.MakePayment(null) as ViewResult;
+			try
+			{
+				controller.BuyNow(99);
+			}
+			catch (ErrorDataException)
+			{
+				return;
+			}
 
 			// Assert
-			Assert.AreEqual("Error", result.ViewName);
-			Assert.IsTrue(result.ViewData.Model is HandleErrorInfo);
+			Assert.Fail("Should Throw");
 		}
 
 		[TestMethod]
 		public void ShouldRedirectToPaidFromPayNow()
 		{
 			// Arrange
-			PaymentController controller = new PaymentController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
 			ActionResult result = controller.PayNow(1);
@@ -68,7 +70,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldCreateTxNumber()
 		{
 			// Arrange
-			PaymentController controller = new PaymentController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
 			controller.PayNow(1);
@@ -84,7 +86,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldThrowFromPayNowIfInvalidId()
 		{
 			// Arrange
-			PaymentController controller = new PaymentController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
 			try
@@ -109,7 +111,7 @@ namespace PayPalEmulator.Tests.Controllers
 			pdt.State = "Completed";
 			UnitOfWork.Commit();
 
-			PaymentController controller = new PaymentController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
 			ViewResult result = controller.Paid(1) as ViewResult;
@@ -121,17 +123,23 @@ namespace PayPalEmulator.Tests.Controllers
 		}
 
 		[TestMethod]
-		public void ShouldDisplayErrorIfPDTInvalid()
+		public void ShouldThrowFromPaidIfInvalidId()
 		{
 			// Arrange
-			PaymentController controller = new PaymentController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
-			ViewResult result = controller.Paid(99) as ViewResult;
+			try
+			{
+				controller.BuyNow(99);
+			}
+			catch (ErrorDataException)
+			{
+				return;
+			}
 
 			// Assert
-			Assert.AreEqual("Error", result.ViewName);
-			Assert.IsTrue(result.ViewData.Model is HandleErrorInfo);
+			Assert.Fail("Should Throw");
 		}
 
 		protected override void InitialiseData(NHibernate.ISession session)

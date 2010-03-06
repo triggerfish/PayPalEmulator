@@ -88,9 +88,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\BinderResolverTests.cs" />
-    <Compile Include="Code\PDTBinderTests.cs" />
-    <Compile Include="Controllers\PaymentControllerTest.cs" />
+    <Compile Include="Code\Binders\BuyNowBinderTests.cs" />
+    <Compile Include="Code\Binders\PostBinderTests.cs" />
+    <Compile Include="Code\Binders\PdtVerificationBinderTests.cs" />
+    <Compile Include="Code\CgiHandlers\AuthorisePdtHandlerTests.cs" />
+    <Compile Include="Code\CgiHandlers\BuyNowClickHandlerTests.cs" />
+    <Compile Include="Controllers\CgiControllerTest.cs" />
+    <Compile Include="Controllers\BuyNowControllerTest.cs" />
     <Compile Include="Helpers\BinderHelpers.cs" />
     <Compile Include="Helpers\DatabaseTest.cs" />
     <Compile Include="Model\PDTTests.cs" />
