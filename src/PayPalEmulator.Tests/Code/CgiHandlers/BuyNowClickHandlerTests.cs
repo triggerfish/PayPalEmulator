@@ -79,7 +79,8 @@ namespace PayPalEmulator.Tests
 				{ "amount", "12.55" },
 				{ "currency_code", "GBP" },
 				{ "custom", "hj8dhfdjfsh98" },
-				{ "emulator_returnUrl", "http://www.testing.com/here" }
+				{ "emulator_returnUrl", "http://www.testing.com/here" },
+				{ "business", "hfdsahfk" }
 			};
 			m_request.Setup(x => x.Form).Returns(form);
 			m_repository = new Repository<PDT>(session);

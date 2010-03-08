@@ -20,6 +20,7 @@ namespace PayPalEmulator
 			pdt.Amount = GetValue("amount", true);
 			pdt.Currency = GetValue("currency_code", true);
 			pdt.Custom = GetValue("custom", true);
+			pdt.Account = GetValue("business", true);
 			return pdt;
 		}
 	}

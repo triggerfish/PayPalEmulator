@@ -58,7 +58,7 @@ namespace PayPalEmulator.Tests.Controllers
 			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
-			ActionResult result = controller.PayNow(1);
+			ActionResult result = controller.PayNow(1, BuyNowAction.Succeed);
 
 			// Assert
 			Assert.IsTrue(result is RedirectToRouteResult);
@@ -73,13 +73,28 @@ namespace PayPalEmulator.Tests.Controllers
 			BuyNowController controller = new BuyNowController(m_repository);
 
 			// Act
-			controller.PayNow(1);
+			controller.PayNow(1, BuyNowAction.Succeed);
 
 			PDT pdt = m_repository.Get(1);
 
 			// Assert
 			Assert.IsFalse(String.IsNullOrEmpty(pdt.Tx));
 			Assert.AreEqual("Completed", pdt.State);
+		}
+
+		[TestMethod]
+		public void ShouldSetStatusToFailed()
+		{
+			// Arrange
+			BuyNowController controller = new BuyNowController(m_repository);
+
+			// Act
+			controller.PayNow(1, BuyNowAction.Fail);
+
+			PDT pdt = m_repository.Get(1);
+
+			// Assert
+			Assert.AreEqual("Failed", pdt.State);
 		}
 
 		[TestMethod]
@@ -91,7 +106,7 @@ namespace PayPalEmulator.Tests.Controllers
 			// Act
 			try
 			{
-				controller.PayNow(99);
+				controller.PayNow(99, BuyNowAction.Succeed);
 			}
 			catch (ErrorDataException)
 			{

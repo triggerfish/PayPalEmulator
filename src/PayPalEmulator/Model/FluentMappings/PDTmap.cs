@@ -21,6 +21,7 @@ namespace PayPalEmulator
 			Map(x => x.Currency);
 			Map(x => x.Custom);
 			Map(x => x.ItemNumber);
+			Map(x => x.Account);
 		}
 	}
 }

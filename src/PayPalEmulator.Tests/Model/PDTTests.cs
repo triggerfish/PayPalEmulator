@@ -29,6 +29,7 @@ namespace PayPalEmulator.Tests
 				.CheckProperty(x => x.Currency, "GBP")
 				.CheckProperty(x => x.Custom, "gfskdgfds898f9sdfdshfsd")
 				.CheckProperty(x => x.ItemNumber, "")
+				.CheckProperty(x => x.Account, "dhsjkhdk")
 				.VerifyTheMappings();
 		}
 
@@ -42,8 +43,8 @@ namespace PayPalEmulator.Tests
 			QueryString qs = pdt.ToQueryString();
 
 			// assert
-			Assert.AreEqual(6, qs.Count);
-			Assert.AreEqual("?tx=ABC&st=&amt=123&cc=&cm=&item_number=", qs.ToString());
+			Assert.AreEqual(7, qs.Count);
+			Assert.AreEqual("?tx=ABC&st=&amt=123&cc=&cm=&item_number=&business=", qs.ToString());
 		}
 	
 		[TestMethod]
@@ -53,7 +54,7 @@ namespace PayPalEmulator.Tests
 			PDT pdt = new PDT { Tx = "ABC", Amount = "123", ReturnUrl = "http://test.com" };
 
 			// assert
-			Assert.AreEqual("http://test.com?tx=ABC&st=&amt=123&cc=&cm=&item_number=", pdt.ToFullReturnUrl());
+			Assert.AreEqual("http://test.com?tx=ABC&st=&amt=123&cc=&cm=&item_number=&business=", pdt.ToFullReturnUrl());
 		}
 	}
 }

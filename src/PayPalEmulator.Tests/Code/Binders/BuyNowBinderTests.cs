@@ -18,6 +18,7 @@ namespace PayPalEmulator.Tests
 		private string m_amount = "12.55";
 		private string m_currency = "GBP";
 		private string m_custom = "hgdsjkahda897";
+		private string m_account = "ytrutyitut";
 		private ModelStateDictionary m_modelState = new ModelStateDictionary();
 
 		[TestMethod]
@@ -31,7 +32,8 @@ namespace PayPalEmulator.Tests
 				{ "emulator_returnUrl", m_returnUrl },
 				{ "amount", m_amount },
 				{ "currency_code", m_currency },
-				{ "custom", m_custom }
+				{ "custom", m_custom },
+				{ "business", m_account}
 			};
 
 			// Act
@@ -43,6 +45,7 @@ namespace PayPalEmulator.Tests
 			Assert.AreEqual(m_amount, p.Amount);
 			Assert.AreEqual(m_currency, p.Currency);
 			Assert.AreEqual(m_custom, p.Custom);
+			Assert.AreEqual(m_account, p.Account);
 		}
 
 		[TestMethod]
@@ -140,6 +143,28 @@ namespace PayPalEmulator.Tests
 				{ "emulator_returnUrl", m_returnUrl },
 				{ "amount", m_amount },
 				{ "currency_code", m_currency }
+			};
+
+			// Act
+			PDT p = binder.Bind(form, m_modelState);
+
+			// Assert
+			Assert.AreEqual(null, p);
+			Assert.IsFalse(m_modelState.IsValid);
+		}
+
+		[TestMethod]
+		public void ShouldFailIfMissingAccount()
+		{
+			// Arrange
+			BuyNowBinder binder = new BuyNowBinder();
+
+			NameValueCollection form = new NameValueCollection {
+				{ "emulator_authToken", m_auth },
+				{ "emulator_returnUrl", m_returnUrl },
+				{ "amount", m_amount },
+				{ "currency_code", m_currency },
+				{ "custom", m_custom }
 			};
 
 			// Act

@@ -48,6 +48,7 @@ namespace PayPalEmulator
 					sb.AppendLine(String.Format("{0}={1}", "mc_fee", commission.ToString()));
 					sb.AppendLine(String.Format("{0}={1}", "mc_gross", HttpUtility.UrlEncodeUnicode(dbPDT.Amount)));
 					sb.AppendLine(String.Format("{0}={1}", "custom", HttpUtility.UrlEncodeUnicode(dbPDT.Custom)));
+					sb.AppendLine(String.Format("{0}={1}", "business", HttpUtility.UrlEncodeUnicode(dbPDT.Account)));
 
 					cr.Content = sb.ToString();
 				}

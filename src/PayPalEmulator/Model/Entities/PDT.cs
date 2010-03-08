@@ -18,6 +18,7 @@ namespace PayPalEmulator
 		public virtual string Currency { get; set; }
 		public virtual string Custom { get; set; }
 		public virtual string ItemNumber { get; set; }
+		public virtual string Account { get; set; }
 
 		public virtual QueryString ToQueryString()
 		{
@@ -27,7 +28,8 @@ namespace PayPalEmulator
 				.Add("amt", Amount ?? "")
 				.Add("cc", Currency ?? "")
 				.Add("cm", Custom ?? "")
-				.Add("item_number", ItemNumber ?? "");
+				.Add("item_number", ItemNumber ?? "")
+				.Add("business", Account ?? "");
 		}
 
 		public virtual string ToFullReturnUrl()
