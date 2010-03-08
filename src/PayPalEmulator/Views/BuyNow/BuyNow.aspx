@@ -7,8 +7,8 @@
     <% using (Html.BeginForm("PayNow", "BuyNow")) { %>
         <fieldset>
             <%= Html.RadioButton("action", "Succeed", true, new { id = "action" }) %><label for="Succeed">Succeed</label><br />
-            <%= Html.RadioButton("action", "Fail", true, new { id = "action" }) %><label for="Fail">Fail</label><br />
-            <%= Html.RadioButton("action", "Corrupt", true, new { id = "action" }) %><label for="Corrupt">Corrupt Response</label><br />
+            <%= Html.RadioButton("action", "Fail", false, new { id = "action" }) %><label for="Fail">Fail</label><br />
+            <%= Html.RadioButton("action", "Corrupt", false, new { id = "action" })%><label for="Corrupt">Corrupt Response</label><br />
             <%= Html.Hidden("pdtId", Model.PDT.Id)%>
             <input type="submit" value="Pay Now" />
         </fieldset>
