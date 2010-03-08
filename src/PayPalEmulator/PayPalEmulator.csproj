@@ -107,16 +107,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Binders\CgiHandlerBinder.cs" />
     <Compile Include="Code\Binders\PdtVerificationBinder.cs" />
     <Compile Include="Code\Binders\PostBinder.cs" />
     <Compile Include="Code\CgiHandlers\BuyNowClickHandler.cs" />
     <Compile Include="Code\CgiHandlers\AuthorisePdtHandler.cs" />
     <Compile Include="Code\CgiHandlers\ICgiHandler.cs" />
     <Compile Include="Code\ErrorDataException.cs" />
-    <Compile Include="Code\Helpers\PostSubmitter.cs" />
-    <Compile Include="Code\Helpers\QueryString.cs" />
     <Compile Include="Code\Binders\BuyNowBinder.cs" />
-    <Compile Include="Code\Filters\TransactionAttribute.cs" />
     <Compile Include="Controllers\CgiController.cs" />
     <Compile Include="Model\FluentMappings\PDTmap.cs" />
     <Compile Include="Model\IoC\StandardModule.cs" />

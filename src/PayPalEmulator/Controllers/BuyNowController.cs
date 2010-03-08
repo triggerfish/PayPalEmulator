@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using Triggerfish.NHibernate;
+using Triggerfish.Web.Mvc;
 
 namespace PayPalEmulator.Controllers
 {

@@ -7,6 +7,7 @@ using Triggerfish.NHibernate;
 using System.Text;
 using Triggerfish.Ninject;
 using Ninject;
+using Triggerfish.Web.Mvc;
 
 namespace PayPalEmulator.Controllers
 {
@@ -23,10 +24,8 @@ namespace PayPalEmulator.Controllers
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		[Transaction]
-		public ActionResult Index(string cmd)
+		public ActionResult Index(ICgiHandler handler)
 		{
-			ICgiHandler handler = ObjectFactory.Kernel.TryGet<ICgiHandler>(cmd);
-
 			if (handler != null)
 			{
 				return handler.Process(Request, ModelState);

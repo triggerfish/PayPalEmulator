@@ -9,6 +9,7 @@ using Triggerfish.Ninject;
 using System.Web.Configuration;
 using Triggerfish.Database;
 using Ninject;
+using Triggerfish.Web.Mvc;
 
 namespace PayPalEmulator
 {
@@ -27,11 +28,11 @@ namespace PayPalEmulator
 				new { controller = "Cgi", action = "Index" }	// Parameter defaults
 			);
 
-			routes.MapRoute(
-				"Default",                                              // Route name
-				"{controller}/{action}/{id}",                           // URL with parameters
-				new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
-			);
+			//routes.MapRoute(
+			//    "Default",                                              // Route name
+			//    "{controller}/{action}/{id}",                           // URL with parameters
+			//    new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
+			//);
 		}
 
 		public override void Init()
@@ -48,6 +49,9 @@ namespace PayPalEmulator
 			RegisterAllControllersIn("PayPalEmulator");
 
 			RegisterRoutes(RouteTable.Routes);
+
+			ModelBinders.Binders.DefaultBinder = new BinderResolver(ObjectFactory.TryGet<IModelBinder>);
+			TransactionAttribute.FactoryResolver = ObjectFactory.TryGet<IUnitOfWorkFactory>;
 		}
 
 		protected override IKernel CreateKernel()

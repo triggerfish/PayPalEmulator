@@ -542,5 +542,37 @@
             </summary>
             <returns>The resultant objects</returns>
         </member>
+        <member name="T:Triggerfish.NHibernate.Testing.DatabaseTest">
+            <summary>
+            Base class for running a unit test against a database using NHibernate
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Testing.DatabaseTest.SetupTest``1">
+            <summary>
+            Setup test method. Should invoke from base class [TestInitialize] method
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Testing.DatabaseTest.TearDownTest">
+            <summary>
+            Setup test method. Should invoke from base class [TestCleanup] method
+            </summary>
+        </member>
+        <member name="M:Triggerfish.NHibernate.Testing.DatabaseTest.InitialiseData(NHibernate.ISession)">
+            <summary>
+            Template method pattern for derived classes to perform custom data insertion
+            after the database connection is created and before the first commit
+            </summary>
+            <param name="session">The NHibernate session</param>
+        </member>
+        <member name="P:Triggerfish.NHibernate.Testing.DatabaseTest.UnitOfWork">
+            <summary>
+            The current unit of work
+            </summary>
+        </member>
+        <member name="P:Triggerfish.NHibernate.Testing.DatabaseTest.Session">
+            <summary>
+            The current NHibernate session
+            </summary>
+        </member>
     </members>
 </doc>

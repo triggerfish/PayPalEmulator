@@ -95,7 +95,6 @@
     <Compile Include="Code\CgiHandlers\BuyNowClickHandlerTests.cs" />
     <Compile Include="Controllers\CgiControllerTest.cs" />
     <Compile Include="Controllers\BuyNowControllerTest.cs" />
-    <Compile Include="Helpers\BinderHelpers.cs" />
     <Compile Include="Helpers\DatabaseTest.cs" />
     <Compile Include="Model\PDTTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

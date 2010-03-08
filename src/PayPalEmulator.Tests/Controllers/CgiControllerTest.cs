@@ -26,6 +26,40 @@ namespace PayPalEmulator.Tests.Controllers
 			Assert.AreEqual("", result.ViewName);
 		}
 
-		// can't test POST Index method as uses Ninject
+		[TestMethod]
+		public void ShouldPerformAction()
+		{
+			// Arrange
+			CGiController controller = new CGiController();
+			FakeHandler handler = new FakeHandler();
+
+			// Act
+			ActionResult result = controller.Index(handler);
+
+			// Assert
+			Assert.IsTrue(result is JsonResult);
+		}
+
+		[TestMethod]
+		public void ShouldRedirectToActionIfNoHandler()
+		{
+			// Arrange
+			CGiController controller = new CGiController();
+
+			// Act
+			RedirectToRouteResult result = controller.Index(null) as RedirectToRouteResult;
+
+			// Assert
+			Assert.AreNotEqual(null, result);
+			Assert.AreEqual("Index", result.RouteValues["action"]);
+		}
+	}
+
+	internal class FakeHandler : ICgiHandler
+	{
+		public ActionResult Process(System.Web.HttpRequestBase request, ModelStateDictionary modelState)
+		{
+			return new JsonResult();
+		}
 	}
 }

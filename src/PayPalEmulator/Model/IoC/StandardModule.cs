@@ -3,6 +3,7 @@ using Ninject.Modules;
 using NHibernate;
 using Triggerfish.NHibernate;
 using Triggerfish.Database;
+using Triggerfish.Web.Mvc;
 
 namespace PayPalEmulator
 {
@@ -37,6 +38,8 @@ namespace PayPalEmulator
 				.ToSelf();
 
 			// binders
+			Bind<ModelBinder<ICgiHandler>>()
+				.To<CgiHandlerBinder>();
 			Bind<ICgiHandler>()
 				.To<BuyNowClickHandler>()
 				.Named("_xclick");

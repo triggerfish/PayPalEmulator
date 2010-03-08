@@ -840,5 +840,199 @@
             </summary>
             <param name="context">HttpContext</param>
         </member>
+        <member name="T:Triggerfish.Web.QueryString">
+            <summary>
+            A chainable query string helper class.
+            Example usage :
+            string strQuery = QueryString.Current.Add("id", "179").ToString();
+            string strQuery = new QueryString().Add("id", "179").ToString();
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="queryString">An existing query string</param>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.ExtractQueryString(System.String)">
+            <summary>
+            Extracts a QueryString from a full URL
+            </summary>
+            <param name="s">The string to extract the QueryString from</param>
+            <returns>A string representing only the QueryString</returns>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.FillFromString(System.String)">
+            <summary>
+            Returns a QueryString object based on a string
+            </summary>
+            <param name="s">The string to parse</param>
+            <returns>The QueryString object </returns>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.Add(System.String,System.String)">
+            <summary>
+            Add a name value pair to the collection
+            </summary>
+            <param name="name">The name</param>
+            <param name="value">The value associated to the name</param>
+            <returns>The QueryString object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.Contains(System.String)">
+            <summary>
+            Checks if a name already exists within the query string collection
+            </summary>
+            <param name="name">The name to check</param>
+            <returns>True if the name exists, false otherwise</returns>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.ToString">
+            <summary>
+            Outputs the QueryString object to a string as a HTTP GET
+            </summary>
+            <returns>The encoded QueryString as it would appear in a browser</returns>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.ToString(Triggerfish.Web.PostTypeEnum)">
+            <summary>
+            Outputs the QueryString object to a string
+            </summary>
+            <param name="type">The type of HTTP action the query will be used in</param>
+            <returns>The encoded QueryString as it would appear in a browser</returns>
+        </member>
+        <member name="P:Triggerfish.Web.QueryString.Item(System.String)">
+            <summary>
+            Overrides the default indexer
+            </summary>
+            <param name="name">Name index into the collection</param>
+            <returns>The associated decoded value for the specified name</returns>
+        </member>
+        <member name="P:Triggerfish.Web.QueryString.Item(System.Int32)">
+            <summary>
+            Overrides the default indexer
+            </summary>
+            <param name="index">Index into the collection</param>
+            <returns>The associated decoded value for the specified index</returns>
+        </member>
+        <member name="T:Triggerfish.Web.PostTypeEnum">
+            <summary>
+            Determines what type of post to perform.
+            </summary>
+        </member>
+        <member name="F:Triggerfish.Web.PostTypeEnum.Get">
+            <summary>
+            Does a get against the source.
+            </summary>
+        </member>
+        <member name="F:Triggerfish.Web.PostTypeEnum.Post">
+            <summary>
+            Does a post against the source.
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Web.PostSubmitter">
+            <summary>
+            Submits post data to a url.
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.PostSubmitter.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.PostSubmitter.#ctor(System.String)">
+            <summary>
+            Constructor that accepts a url as a parameter
+            </summary>
+            <param name="url">The url where the post will be submitted to.</param>
+        </member>
+        <member name="M:Triggerfish.Web.PostSubmitter.#ctor(System.String,Triggerfish.Web.QueryString)">
+            <summary>
+            Constructor allowing the setting of the url and items to post.
+            </summary>
+            <param name="url">the url for the post.</param>
+            <param name="postItems">The values for the post.</param>
+        </member>
+        <member name="M:Triggerfish.Web.PostSubmitter.Post">
+            <summary>
+            Posts the supplied data to specified url.
+            </summary>
+            <returns>a string containing the result of the post.</returns>
+        </member>
+        <member name="M:Triggerfish.Web.PostSubmitter.Post(System.String)">
+            <summary>
+            Posts the supplied data to specified url.
+            </summary>
+            <param name="url">The url to post to.</param>
+            <returns>a string containing the result of the post.</returns>
+        </member>
+        <member name="M:Triggerfish.Web.PostSubmitter.Post(System.String,Triggerfish.Web.QueryString)">
+            <summary>
+            Posts the supplied data to specified url.
+            </summary>
+            <param name="url">The url to post to.</param>
+            <param name="postItems">The values to post.</param>
+            <returns>a string containing the result of the post.</returns>
+        </member>
+        <member name="M:Triggerfish.Web.PostSubmitter.PostData(System.String,System.String)">
+            <summary>
+            Posts data to a specified url. Note that this assumes that you have already url encoded the post data.
+            </summary>
+            <param name="postData">The data to post.</param>
+            <param name="url">the url to post to.</param>
+            <returns>Returns the result of the post.</returns>
+        </member>
+        <member name="P:Triggerfish.Web.PostSubmitter.Url">
+            <summary>
+            Gets or sets the url to submit the post to.
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.PostSubmitter.PostItems">
+            <summary>
+            Gets or sets the items to post.
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.PostSubmitter.Type">
+            <summary>
+            Gets or sets the type of action to perform against the url.
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Web.Mvc.BinderResolver">
+            <summary>
+            Generic binder resolver. Will create a binder class for the expected type
+            (if one has been registered with the resolver function)
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.BinderResolver.#ctor(System.Func{System.Type,System.Web.Mvc.IModelBinder})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="resolver">Resolver function - typically IoC</param>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.BinderResolver.BindModel(System.Web.Mvc.ControllerContext,System.Web.Mvc.ModelBindingContext)">
+            <summary>
+            Invoked by Mvc framework to bind the context data to an object
+            </summary>
+            <param name="controllerContext">The controller context</param>
+            <param name="bindingContext">The model binding context</param>
+            <returns>An object bound from the context data</returns>
+        </member>
+        <member name="T:Triggerfish.Web.Mvc.TransactionAttribute">
+            <summary>
+            Filter attribute for a transaction. After the result has executed, the current
+            unit of work will be committed
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.TransactionAttribute.OnResultExecuted(System.Web.Mvc.ResultExecutedContext)">
+            <summary>
+            The handler when the result has executed
+            </summary>
+            <param name="filterContext">The filter context</param>
+        </member>
+        <member name="P:Triggerfish.Web.Mvc.TransactionAttribute.FactoryResolver">
+            <summary>
+            A resolver function to get the current IUnitOfWorkFactory - typically IoC
+            </summary>
+        </member>
     </members>
 </doc>

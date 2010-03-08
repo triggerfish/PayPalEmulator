@@ -9,6 +9,7 @@ using NHibernate;
 using Triggerfish.Validator;
 using NHibernate.Exceptions;
 using System.Data.SQLite;
+using Triggerfish.Web;
 
 namespace PayPalEmulator.Tests
 {
