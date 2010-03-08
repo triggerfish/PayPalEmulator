@@ -7,13 +7,14 @@ using Triggerfish.Database;
 
 namespace PayPalEmulator
 {
-	public class PDTmap : ClassMap<PDT>
+	public class TransactionMap : ClassMap<Transaction>
 	{
-		public PDTmap()
+		public TransactionMap()
 		{
-			Table("PDT");
+			Table("Transactions");
 			Id(x => x.Id).GeneratedBy.Native();
 			Map(x => x.ReturnUrl);
+			Map(x => x.IpnReturnUrl);
 			Map(x => x.AuthToken);
 			Map(x => x.Tx);
 			Map(x => x.State);
@@ -22,6 +23,7 @@ namespace PayPalEmulator
 			Map(x => x.Custom);
 			Map(x => x.ItemNumber);
 			Map(x => x.Account);
+			Map(x => x.VerifySign);
 		}
 	}
 }

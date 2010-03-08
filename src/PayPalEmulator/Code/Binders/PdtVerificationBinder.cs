@@ -10,14 +10,14 @@ using System.Collections.Specialized;
 
 namespace PayPalEmulator
 {
-	public class PdtVerificationBinder : PostBinder<PDT>
+	public class PdtVerificationBinder : PostBinder<Transaction>
 	{
-		protected override PDT Bind()
+		protected override Transaction Bind()
 		{
-			PDT pdt = new PDT();
-			pdt.AuthToken = GetValue("at", true);
-			pdt.Tx = GetValue("tx", true);
-			return pdt;
+			Transaction tx = new Transaction();
+			tx.AuthToken = GetValue("at", true);
+			tx.Tx = GetValue("tx", true);
+			return tx;
 		}
 	}
 }

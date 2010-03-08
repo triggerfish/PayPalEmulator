@@ -15,6 +15,7 @@ namespace PayPalEmulator.Tests
 	{
 		private string m_auth = "jkfldfu890jdsoifjs98few8fwejfslkdfhs98hhkjh98";
 		private string m_returnUrl = "http://www.testing.com/here";
+		private string m_ipnReturnUrl = "http://www.testing.com/there";
 		private string m_amount = "12.55";
 		private string m_currency = "GBP";
 		private string m_custom = "hgdsjkahda897";
@@ -22,7 +23,7 @@ namespace PayPalEmulator.Tests
 		private ModelStateDictionary m_modelState = new ModelStateDictionary();
 
 		[TestMethod]
-		public void ShouldBindPdt()
+		public void ShouldBindTx()
 		{
 			// Arrange
 			BuyNowBinder binder = new BuyNowBinder();
@@ -30,6 +31,7 @@ namespace PayPalEmulator.Tests
 			NameValueCollection form = new NameValueCollection {
 				{ "emulator_authToken", m_auth },
 				{ "emulator_returnUrl", m_returnUrl },
+				{ "emulator_ipnReturnUrl", m_ipnReturnUrl },
 				{ "amount", m_amount },
 				{ "currency_code", m_currency },
 				{ "custom", m_custom },
@@ -37,7 +39,7 @@ namespace PayPalEmulator.Tests
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(m_auth, p.AuthToken);
@@ -56,13 +58,15 @@ namespace PayPalEmulator.Tests
 
 			NameValueCollection form = new NameValueCollection {
 				{ "emulator_returnUrl", m_returnUrl },
+				{ "emulator_ipnReturnUrl", m_ipnReturnUrl },
 				{ "amount", m_amount },
 				{ "currency_code", m_currency },
-				{ "custom", m_custom }
+				{ "custom", m_custom },
+				{ "business", m_account}
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);
@@ -77,13 +81,38 @@ namespace PayPalEmulator.Tests
 
 			NameValueCollection form = new NameValueCollection {
 				{ "emulator_authToken", m_auth },
+				{ "emulator_ipnReturnUrl", m_ipnReturnUrl },
 				{ "amount", m_amount },
 				{ "currency_code", m_currency },
-				{ "custom", m_custom }
+				{ "custom", m_custom },
+				{ "business", m_account}
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
+
+			// Assert
+			Assert.AreEqual(null, p);
+			Assert.IsFalse(m_modelState.IsValid);
+		}
+
+		[TestMethod]
+		public void ShouldFailIfMissingIpnUrl()
+		{
+			// Arrange
+			BuyNowBinder binder = new BuyNowBinder();
+
+			NameValueCollection form = new NameValueCollection {
+				{ "emulator_authToken", m_auth },
+				{ "emulator_returnUrl", m_returnUrl },
+				{ "amount", m_amount },
+				{ "currency_code", m_currency },
+				{ "custom", m_custom },
+				{ "business", m_account}
+			};
+
+			// Act
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);
@@ -99,12 +128,14 @@ namespace PayPalEmulator.Tests
 			NameValueCollection form = new NameValueCollection {
 				{ "emulator_authToken", m_auth },
 				{ "emulator_returnUrl", m_returnUrl },
+				{ "emulator_ipnReturnUrl", m_ipnReturnUrl },
 				{ "currency_code", m_currency },
-				{ "custom", m_custom }
+				{ "custom", m_custom },
+				{ "business", m_account}
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);
@@ -120,12 +151,14 @@ namespace PayPalEmulator.Tests
 			NameValueCollection form = new NameValueCollection {
 				{ "emulator_authToken", m_auth },
 				{ "emulator_returnUrl", m_returnUrl },
+				{ "emulator_ipnReturnUrl", m_ipnReturnUrl },
 				{ "amount", m_amount },
-				{ "custom", m_custom }
+				{ "custom", m_custom },
+				{ "business", m_account}
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);
@@ -141,12 +174,14 @@ namespace PayPalEmulator.Tests
 			NameValueCollection form = new NameValueCollection {
 				{ "emulator_authToken", m_auth },
 				{ "emulator_returnUrl", m_returnUrl },
+				{ "emulator_ipnReturnUrl", m_ipnReturnUrl },
 				{ "amount", m_amount },
-				{ "currency_code", m_currency }
+				{ "currency_code", m_currency },
+				{ "business", m_account}
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);
@@ -162,13 +197,14 @@ namespace PayPalEmulator.Tests
 			NameValueCollection form = new NameValueCollection {
 				{ "emulator_authToken", m_auth },
 				{ "emulator_returnUrl", m_returnUrl },
+				{ "emulator_ipnReturnUrl", m_ipnReturnUrl },
 				{ "amount", m_amount },
 				{ "currency_code", m_currency },
 				{ "custom", m_custom }
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);

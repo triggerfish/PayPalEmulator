@@ -9,42 +9,53 @@ using System.Collections.Specialized;
 using System.Text;
 using Triggerfish.NHibernate;
 using System.Web.Routing;
+using Triggerfish.Web;
 
 namespace PayPalEmulator
 {
-	public class AuthorisePdtHandler : AuthoriseHandler, ICgiHandler
+	public class AuthoriseIpnHandler : AuthoriseHandler, ICgiHandler
 	{
 		private Repository<Transaction> m_txRepository;
 
-		public AuthorisePdtHandler(Repository<Transaction> txRepository)
+		public AuthoriseIpnHandler(Repository<Transaction> txRepository)
 		{
 			m_txRepository = txRepository;
 		}
 
 		public ActionResult Process(HttpRequestBase request, ModelStateDictionary modelState)
 		{
-			PdtVerificationBinder binder = new PdtVerificationBinder();
+			IpnVerificationBinder binder = new IpnVerificationBinder();
 			Transaction tx = binder.Bind(request.Form, modelState);
 
 			ContentResult cr = new ContentResult();
 			cr.ContentEncoding = Encoding.UTF8;
 			cr.ContentType = "text/html";
-			cr.Content = "FAIL";
+			cr.Content = "INVALID";
 
 			if (tx != null)
 			{
 				Transaction dbTx = m_txRepository.GetAll().Where(x => x.Tx == tx.Tx).FirstOrDefault();
-				if (dbTx != null && dbTx.AuthToken == tx.AuthToken)
+				if (dbTx != null)
 				{
-					StringBuilder sb = new StringBuilder();
-					sb.AppendLine("SUCCESS");
-					sb.AppendLine(BuildContent(dbTx));
+					string expected = dbTx.ToIpnQueryString().ToString();
+					QueryString actualQs = new QueryString();
+					actualQs.Add(request.Form);
+					actualQs.Remove("cmd");
+					string actual = actualQs.ToString();
 
-					cr.Content = sb.ToString();
+					if (expected == actual)
+					{
+						StringBuilder sb = new StringBuilder();
+						sb.AppendLine("VERIFIED");
+						sb.AppendLine(BuildContent(dbTx));
+						sb.AppendLine(String.Format("{0}={1}", "verify_sign", HttpUtility.UrlEncodeUnicode(dbTx.VerifySign)));
+
+						cr.Content = sb.ToString();
+					}
 				}
 			}
 
-			return cr;		
+			return cr;
 		}
 	}
 }

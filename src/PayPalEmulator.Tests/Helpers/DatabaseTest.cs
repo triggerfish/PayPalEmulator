@@ -20,7 +20,7 @@ namespace PayPalEmulator.Tests
 		[TestInitialize]
 		public void Setup()
 		{
- 			SetupTest<PDT>();
+ 			SetupTest<Transaction>();
 		}
 
 		[TestCleanup]

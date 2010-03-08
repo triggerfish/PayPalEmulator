@@ -14,29 +14,29 @@ namespace PayPalEmulator
 {
 	public class BuyNowClickHandler : ICgiHandler
 	{
-		private Repository<PDT> m_pdtRepository;
+		private Repository<Transaction> m_txRepository;
 
-		public BuyNowClickHandler(Repository<PDT> pdtRepository)
+		public BuyNowClickHandler(Repository<Transaction> txRepository)
 		{
-			m_pdtRepository = pdtRepository;
+			m_txRepository = txRepository;
 		}
 
 		public ActionResult Process(HttpRequestBase request, ModelStateDictionary modelState)
 		{
 			BuyNowBinder binder = new BuyNowBinder();
-			PDT pdt = binder.Bind(request.Form, modelState);
+			Transaction tx = binder.Bind(request.Form, modelState);
 
 			if (!modelState.IsValid)
 			{
 				throw new ErrorDataException(modelState);
 			}
 
-			m_pdtRepository.Insert(pdt);
+			m_txRepository.Insert(tx);
 
 			return new RedirectToRouteResult(new RouteValueDictionary(new {
 				controller = "BuyNow",
 				action = "BuyNow",
-				pdtId = pdt.Id
+				txId = tx.Id
 			}));
 		}
 	}

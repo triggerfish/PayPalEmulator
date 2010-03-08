@@ -18,7 +18,7 @@ namespace PayPalEmulator.Tests
 	[TestClass]
 	public class BuyNowClickHandlerTests : DatabaseTest
 	{
-		private Repository<PDT> m_repository;
+		private Repository<Transaction> m_repository;
 		Mock<HttpRequestBase> m_request = new Mock<HttpRequestBase>();
 		private ModelStateDictionary m_modelState = new ModelStateDictionary();
 
@@ -38,7 +38,7 @@ namespace PayPalEmulator.Tests
 		}
 
 		[TestMethod]
-		public void ShouldInsertPDTIfSuccessful()
+		public void ShouldInsertTxIfSuccessful()
 		{
 			// Arrange
 			BuyNowClickHandler handler = new BuyNowClickHandler(m_repository);
@@ -80,10 +80,11 @@ namespace PayPalEmulator.Tests
 				{ "currency_code", "GBP" },
 				{ "custom", "hj8dhfdjfsh98" },
 				{ "emulator_returnUrl", "http://www.testing.com/here" },
+				{ "emulator_ipnReturnUrl", "http://www.testing.com/there" },
 				{ "business", "hfdsahfk" }
 			};
 			m_request.Setup(x => x.Form).Returns(form);
-			m_repository = new Repository<PDT>(session);
+			m_repository = new Repository<Transaction>(session);
 		}
 	}
 }

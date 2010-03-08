@@ -108,17 +108,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Binders\CgiHandlerBinder.cs" />
+    <Compile Include="Code\Binders\IpnVerificationBinder.cs" />
     <Compile Include="Code\Binders\PdtVerificationBinder.cs" />
     <Compile Include="Code\Binders\PostBinder.cs" />
     <Compile Include="Code\CgiHandlers\BuyNowClickHandler.cs" />
     <Compile Include="Code\CgiHandlers\AuthorisePdtHandler.cs" />
+    <Compile Include="Code\CgiHandlers\AuthoriseIpnHandler.cs" />
+    <Compile Include="Code\CgiHandlers\AuthoriseHandler.cs" />
     <Compile Include="Code\CgiHandlers\ICgiHandler.cs" />
+    <Compile Include="Code\TransactionExtensions.cs" />
     <Compile Include="Code\ErrorDataException.cs" />
     <Compile Include="Code\Binders\BuyNowBinder.cs" />
     <Compile Include="Controllers\CgiController.cs" />
-    <Compile Include="Model\FluentMappings\PDTmap.cs" />
-    <Compile Include="Model\IoC\StandardModule.cs" />
-    <Compile Include="Model\Entities\PDT.cs" />
+    <Compile Include="Model\FluentMappings\TransactionMap.cs" />
+    <Compile Include="Code\IoC\StandardModule.cs" />
+    <Compile Include="Model\Entities\Transaction.cs" />
     <Compile Include="Code\ViewData\PaymentViewData.cs" />
     <Compile Include="Controllers\BuyNowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

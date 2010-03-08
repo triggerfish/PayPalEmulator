@@ -18,7 +18,7 @@ namespace PayPalEmulator.Tests
 		private ModelStateDictionary m_modelState = new ModelStateDictionary();
 
 		[TestMethod]
-		public void ShouldBindPdt()
+		public void ShouldBindTx()
 		{
 			// Arrange
 			PdtVerificationBinder binder = new PdtVerificationBinder();
@@ -29,7 +29,7 @@ namespace PayPalEmulator.Tests
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(m_at, p.AuthToken);
@@ -47,7 +47,7 @@ namespace PayPalEmulator.Tests
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);
@@ -65,7 +65,7 @@ namespace PayPalEmulator.Tests
 			};
 
 			// Act
-			PDT p = binder.Bind(form, m_modelState);
+			Transaction p = binder.Bind(form, m_modelState);
 
 			// Assert
 			Assert.AreEqual(null, p);

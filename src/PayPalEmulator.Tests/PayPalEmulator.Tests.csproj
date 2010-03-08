@@ -89,14 +89,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Binders\BuyNowBinderTests.cs" />
+    <Compile Include="Code\Binders\IpnVerificationBinderTests.cs" />
     <Compile Include="Code\Binders\PostBinderTests.cs" />
     <Compile Include="Code\Binders\PdtVerificationBinderTests.cs" />
     <Compile Include="Code\CgiHandlers\AuthorisePdtHandlerTests.cs" />
     <Compile Include="Code\CgiHandlers\BuyNowClickHandlerTests.cs" />
+    <Compile Include="Code\CgiHandlers\AuthoriseIpnHandlerTests.cs" />
     <Compile Include="Controllers\CgiControllerTest.cs" />
     <Compile Include="Controllers\BuyNowControllerTest.cs" />
+    <Compile Include="Helpers\TxHelpers.cs" />
     <Compile Include="Helpers\DatabaseTest.cs" />
-    <Compile Include="Model\PDTTests.cs" />
+    <Compile Include="Model\TransactionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>

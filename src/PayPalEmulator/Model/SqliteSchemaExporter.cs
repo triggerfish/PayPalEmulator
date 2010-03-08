@@ -18,7 +18,7 @@ namespace PayPalEmulator
 		public void GenerateScript(System.Action<string> scriptAction, IList<string> parameterValues)
 		{
 			Configuration config = new Configuration(new SqliteDatabase(parameterValues[0]));
-			config.Create<PDT>();
+			config.Create<Transaction>();
 			ExportSchema.FromConfiguration(config, scriptAction);
 		}
 	}

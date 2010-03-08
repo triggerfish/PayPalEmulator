@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using Triggerfish.Database;
 using System.Text;
-using Triggerfish.Web;
 
 namespace PayPalEmulator
 {
-	public class PDT : Entity<int>
+	public class Transaction : Entity<int>
 	{
 		public virtual string ReturnUrl { get; set; }
+		public virtual string IpnReturnUrl { get; set; }
 		public virtual string AuthToken { get; set; }
 		public virtual string Tx { get; set; }
 		public virtual string State { get; set; }
@@ -19,22 +19,12 @@ namespace PayPalEmulator
 		public virtual string Custom { get; set; }
 		public virtual string ItemNumber { get; set; }
 		public virtual string Account { get; set; }
+		public virtual string VerifySign { get; set; }
 
-		public virtual QueryString ToQueryString()
+		public virtual decimal GetFee()
 		{
-			return new QueryString()
-				.Add("tx", Tx ?? "")
-				.Add("st", State ?? "")
-				.Add("amt", Amount ?? "")
-				.Add("cc", Currency ?? "")
-				.Add("cm", Custom ?? "")
-				.Add("item_number", ItemNumber ?? "")
-				.Add("business", Account ?? "");
-		}
-
-		public virtual string ToFullReturnUrl()
-		{
-			return ReturnUrl + ToQueryString().ToString();
+			decimal amount = Decimal.Parse(Amount);
+			return Math.Round((amount * 0.034m), 2, MidpointRounding.AwayFromZero) + 0.2m;
 		}
 	}
 }

@@ -4,6 +4,7 @@ using NHibernate;
 using Triggerfish.NHibernate;
 using Triggerfish.Database;
 using Triggerfish.Web.Mvc;
+using Triggerfish.Web;
 
 namespace PayPalEmulator
 {
@@ -22,7 +23,7 @@ namespace PayPalEmulator
 		{
 			Configuration config = new Configuration(new SqliteDatabase(m_sqliteFilename));
 
-			config.Create<PDT>();
+			config.Create<Transaction>();
 
 			UnitOfWorkFactory.Initialise(config.Config, m_storage);
 
@@ -33,8 +34,8 @@ namespace PayPalEmulator
 				.To<UnitOfWorkFactory>()
 				.InTransientScope();
 
-			// repositories
-			Bind<Repository<PDT>>()
+			// entities
+			Bind<Repository<Transaction>>()
 				.ToSelf();
 
 			// binders
@@ -46,6 +47,13 @@ namespace PayPalEmulator
 			Bind<ICgiHandler>()
 				.To<AuthorisePdtHandler>()
 				.Named("_notify-synch");
+			Bind<ICgiHandler>()
+				.To<AuthoriseIpnHandler>()
+				.Named("_notify-validate");
+
+			// misc
+			Bind<IPostSubmitter>()
+				.To<PostSubmitter>();
 		}
 	}
 }

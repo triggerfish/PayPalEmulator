@@ -8,19 +8,21 @@ using PayPalEmulator;
 using PayPalEmulator.Controllers;
 using Moq;
 using Triggerfish.NHibernate;
+using Triggerfish.Web;
 
 namespace PayPalEmulator.Tests.Controllers
 {
 	[TestClass]
 	public class BuyNowControllerTest : DatabaseTest
 	{
-		private Repository<PDT> m_repository;
+		private Repository<Transaction> m_repository;
+		private Mock<IPostSubmitter> m_postSubmitter = new Mock<IPostSubmitter>();
 
 		[TestMethod]
 		public void ShouldDisplayBuyNow()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			ViewResult result = controller.BuyNow(1);
@@ -28,14 +30,14 @@ namespace PayPalEmulator.Tests.Controllers
 			// Assert
 			Assert.AreEqual("", result.ViewName);
 			Assert.IsTrue(result.ViewData.Model is PaymentViewData);
-			Assert.AreNotEqual(null, ((PaymentViewData)result.ViewData.Model).PDT);
+			Assert.AreNotEqual(null, ((PaymentViewData)result.ViewData.Model).Tx);
 		}
 
 		[TestMethod]
 		public void ShouldThrowFromBuyNowIfInvalidId()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			try
@@ -55,7 +57,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldRedirectToPaidFromPayNow()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			ActionResult result = controller.PayNow(1, BuyNowAction.Succeed);
@@ -63,45 +65,75 @@ namespace PayPalEmulator.Tests.Controllers
 			// Assert
 			Assert.IsTrue(result is RedirectToRouteResult);
 			Assert.AreEqual("Paid", ((RedirectToRouteResult)result).RouteValues["action"]);
-			Assert.AreEqual(1, (int)((RedirectToRouteResult)result).RouteValues["pdtId"]);
+			Assert.AreEqual(1, (int)((RedirectToRouteResult)result).RouteValues["txId"]);
 		}
 
 		[TestMethod]
-		public void ShouldCreateTxNumber()
+		public void ShouldCreateTxAndVerifyNumbers()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			controller.PayNow(1, BuyNowAction.Succeed);
 
-			PDT pdt = m_repository.Get(1);
+			Transaction tx = m_repository.Get(1);
 
 			// Assert
-			Assert.IsFalse(String.IsNullOrEmpty(pdt.Tx));
-			Assert.AreEqual("Completed", pdt.State);
+			Assert.IsFalse(String.IsNullOrEmpty(tx.Tx));
+			Assert.IsFalse(String.IsNullOrEmpty(tx.VerifySign));
+			Assert.AreEqual("Completed", tx.State);
+		}
+
+		[TestMethod]
+		public void ShouldSendIpnMessage()
+		{
+			// Arrange
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			Transaction tx = m_repository.Get(1);
+			tx.IpnReturnUrl = "http://test.com/";
+			UnitOfWork.Commit();
+
+			// Act
+			controller.PayNow(1, BuyNowAction.Succeed);
+
+			// Assert
+			m_postSubmitter.Verify(x => x.BeginPost(null, null));
+		}
+
+		[TestMethod]
+		public void ShouldNotSendIpnMessageIfNoUrl()
+		{
+			// Arrange
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+
+			// Act
+			controller.PayNow(1, BuyNowAction.Succeed);
+
+			// Assert
+			m_postSubmitter.Verify(x => x.BeginPost(null, null), Times.Never());
 		}
 
 		[TestMethod]
 		public void ShouldSetStatusToFailed()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			controller.PayNow(1, BuyNowAction.Fail);
 
-			PDT pdt = m_repository.Get(1);
+			Transaction tx = m_repository.Get(1);
 
 			// Assert
-			Assert.AreEqual("Failed", pdt.State);
+			Assert.AreEqual("Failed", tx.State);
 		}
 
 		[TestMethod]
 		public void ShouldThrowFromPayNowIfInvalidId()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			try
@@ -121,12 +153,12 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldDisplayPaid()
 		{
 			// Arrange
-			PDT pdt = m_repository.Get(1);
-			pdt.Tx = "hfjdhfsk";
-			pdt.State = "Completed";
+			Transaction tx = m_repository.Get(1);
+			tx.Tx = "hfjdhfsk";
+			tx.State = "Completed";
 			UnitOfWork.Commit();
 
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			ViewResult result = controller.Paid(1) as ViewResult;
@@ -134,14 +166,14 @@ namespace PayPalEmulator.Tests.Controllers
 			// Assert
 			Assert.AreEqual("", result.ViewName);
 			Assert.IsTrue(result.ViewData.Model is PaymentViewData);
-			Assert.AreNotEqual(null, ((PaymentViewData)result.ViewData.Model).PDT);
+			Assert.AreNotEqual(null, ((PaymentViewData)result.ViewData.Model).Tx);
 		}
 
 		[TestMethod]
 		public void ShouldThrowFromPaidIfInvalidId()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository);
+			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
 
 			// Act
 			try
@@ -159,9 +191,10 @@ namespace PayPalEmulator.Tests.Controllers
 
 		protected override void InitialiseData(NHibernate.ISession session)
 		{
-			PDT pdt = new PDT { Amount = "12.55", AuthToken = "fsd7ds876786fsd86", Currency = "GBP", Custom = "hj8dhfdjfsh98", ReturnUrl = "http://www.testing.com/here" };
-			m_repository = new Repository<PDT>(session);
-			m_repository.Insert(pdt);
+			TxHelpers txh = new TxHelpers();
+			Transaction tx = txh.CreateTx();
+			m_repository = new Repository<Transaction>(session);
+			m_repository.Insert(tx);
 		}
 	}
 }

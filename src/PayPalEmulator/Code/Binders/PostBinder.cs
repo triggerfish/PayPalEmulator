@@ -39,7 +39,7 @@ namespace PayPalEmulator
 			{
 				value = Form[name];
 			}
-			if (required && String.IsNullOrEmpty(value))
+			if (required && value == null)
 			{
 				throw new ValidationException(name, "Field is required");
 			}

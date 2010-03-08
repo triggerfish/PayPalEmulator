@@ -7,6 +7,7 @@ namespace PayPalEmulator
 {
 	public class PaymentViewData
 	{
-		public PDT PDT { get; set; }
+		public Transaction Tx { get; set; }
+		public bool IsIpnEnabled { get { return !String.IsNullOrEmpty(Tx.IpnReturnUrl); } }
 	}
 }

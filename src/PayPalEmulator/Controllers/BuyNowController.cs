@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using Triggerfish.NHibernate;
 using Triggerfish.Web.Mvc;
+using Triggerfish.Web;
 
 namespace PayPalEmulator.Controllers
 {
@@ -19,67 +20,75 @@ namespace PayPalEmulator.Controllers
 	[HandleError]
 	public class BuyNowController : Controller
 	{
-		private Repository<PDT> m_pdtRepository;
+		private Repository<Transaction> m_txRepository;
+		private IPostSubmitter m_postSubmitter;
 
-		public BuyNowController(Repository<PDT> pdtRepository)
+		public BuyNowController(Repository<Transaction> txRepository, IPostSubmitter postSubmitter)
 		{
-			m_pdtRepository = pdtRepository;
+			m_txRepository = txRepository;
+			m_postSubmitter = postSubmitter;
 		}
 
 		[AcceptVerbs(HttpVerbs.Get)]
-		public ViewResult BuyNow(int pdtId)
+		public ViewResult BuyNow(int txId)
 		{
-			PDT pdt = GetPdt(pdtId);
+			Transaction tx = GetTx(txId);
 
-			m_pdtRepository.Insert(pdt);
+			m_txRepository.Insert(tx);
 
-			return View(new PaymentViewData { PDT = pdt });
+			return View(new PaymentViewData { Tx = tx });
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		[Transaction]
-		public ActionResult PayNow(int pdtId, BuyNowAction action)
+		public ActionResult PayNow(int txId, BuyNowAction action)
 		{
-			PDT pdt = GetPdt(pdtId);
+			Transaction tx = GetTx(txId);
 
-			pdt.Tx = Regex.Replace(Guid.NewGuid().ToString(), "-", String.Empty);
+			tx.Tx = Regex.Replace(Guid.NewGuid().ToString(), "-", String.Empty);
+			tx.VerifySign = Regex.Replace(Guid.NewGuid().ToString(), "-", String.Empty);
 
 			switch (action)
 			{
 				case BuyNowAction.Succeed:
-					pdt.State = "Completed";
+					tx.State = "Completed";
 					break;
 				case BuyNowAction.Fail:
-					pdt.State = "Failed";
+					tx.State = "Failed";
 					break;
 				case BuyNowAction.Corrupt:
-					pdt.State = "Completed";
-					pdt.Tx = null;
+					tx.State = "Completed";
+					tx.Tx = null;
 					break;
 			}
 
-			return RedirectToAction("Paid", new { pdtId = pdtId });
+			if (!String.IsNullOrEmpty(tx.IpnReturnUrl))
+			{
+				m_postSubmitter.Url = tx.IpnReturnUrl;
+				m_postSubmitter.PostItems = tx.ToIpnQueryString();
+				m_postSubmitter.BeginPost(null, null);
+			}
+
+			return RedirectToAction("Paid", new { txId = txId });
 		}
 
 		[AcceptVerbs(HttpVerbs.Get)]
-		public ViewResult Paid(int pdtId)
+		public ViewResult Paid(int txId)
 		{
-			PDT pdt = GetPdt(pdtId);
-
-			return View(new PaymentViewData { PDT = pdt });
+			return View(new PaymentViewData { Tx = GetTx(txId) });
 		}
 
-		private PDT GetPdt(int id)
+		private Transaction GetTx(int txId)
 		{
-			PDT pdt = m_pdtRepository.Get(id);
+			Transaction tx = m_txRepository.Get(txId);
 
-			if (null == pdt)
+			if (null == tx)
 			{
-				ModelState.AddModelError("pdtId", String.Format("Invalid ID: {0}", id));
+				ModelState.AddModelError("txId", String.Format("Invalid ID: {0}", txId));
 				throw new ErrorDataException(ModelState);
 			}
 
-			return pdt;
+			return tx;
 		}
 	}
 }
