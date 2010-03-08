@@ -7,6 +7,10 @@
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Paid</h2>
     <p>PayPal transaction: <%= Model.PDT.Tx %></p>
+    <% if (Model.PDT.State == "Completed") { %>
     <p>Thank you, your payment has been received.</p>
+    <% } else { %>
+    <p>Sorry, payment failed.</p>
+    <% } %>
     <p>You will be redirected to the vendor's site in 5 seconds.</p>
 </asp:Content>

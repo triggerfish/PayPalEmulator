@@ -44,7 +44,7 @@ namespace PayPalEmulator
 
 					sb.AppendLine(String.Format("{0}={1}", "txn_type", "web_accept"));
 					sb.AppendLine(String.Format("{0}={1}", "txn_id", HttpUtility.UrlEncodeUnicode(dbPDT.Tx)));
-					sb.AppendLine(String.Format("{0}={1}", "payment_status", "Completed"));
+					sb.AppendLine(String.Format("{0}={1}", "payment_status", dbPDT.State));
 					sb.AppendLine(String.Format("{0}={1}", "mc_fee", commission.ToString()));
 					sb.AppendLine(String.Format("{0}={1}", "mc_gross", HttpUtility.UrlEncodeUnicode(dbPDT.Amount)));
 					sb.AppendLine(String.Format("{0}={1}", "custom", HttpUtility.UrlEncodeUnicode(dbPDT.Custom)));

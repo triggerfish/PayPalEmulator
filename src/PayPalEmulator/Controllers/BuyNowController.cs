@@ -9,6 +9,13 @@ using Triggerfish.Web.Mvc;
 
 namespace PayPalEmulator.Controllers
 {
+	public enum BuyNowAction
+	{
+		Succeed,
+		Fail,
+		Corrupt
+	}
+
 	[HandleError]
 	public class BuyNowController : Controller
 	{
@@ -31,12 +38,25 @@ namespace PayPalEmulator.Controllers
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		[Transaction]
-		public ActionResult PayNow(int pdtId)
+		public ActionResult PayNow(int pdtId, BuyNowAction action)
 		{
 			PDT pdt = GetPdt(pdtId);
 
 			pdt.Tx = Regex.Replace(Guid.NewGuid().ToString(), "-", String.Empty);
-			pdt.State = "Completed";
+
+			switch (action)
+			{
+				case BuyNowAction.Succeed:
+					pdt.State = "Completed";
+					break;
+				case BuyNowAction.Fail:
+					pdt.State = "Failed";
+					break;
+				case BuyNowAction.Corrupt:
+					pdt.State = "Completed";
+					pdt.Tx = null;
+					break;
+			}
 
 			return RedirectToAction("Paid", new { pdtId = pdtId });
 		}
