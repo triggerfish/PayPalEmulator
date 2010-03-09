@@ -125,6 +125,14 @@
             </summary>
             <returns>The current IUnitOfWork</returns>
         </member>
+        <member name="M:Triggerfish.Database.IUnitOfWorkFactory.CreateUnitOfWork">
+            <summary>
+            Creates the current UoW. The method will only
+            create a new UoW if one is not already active. 
+            Otherwise the existing UoW is returned
+            </summary>
+            <returns>The current IUnitOfWork</returns>
+        </member>
         <member name="M:Triggerfish.Database.IUnitOfWorkFactory.CloseCurrentUnitOfWork">
             <summary>
             Closes the current unit of work

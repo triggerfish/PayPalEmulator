@@ -174,7 +174,7 @@
             <summary>
             Overridden indexer to decode the value
             </summary>
-            <param name="index">The key name</param>
+            <param name="name">The key name</param>
             <returns>The decoded value</returns>
         </member>
         <member name="T:Triggerfish.Web.Mvc.PageLinkExtensions">
@@ -280,11 +280,11 @@
             Default constructor
             </summary>
         </member>
-        <member name="M:Triggerfish.Web.Mvc.AuthoriseAttribute.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)">
+        <member name="M:Triggerfish.Web.Mvc.AuthoriseAttribute.OnAuthorization(System.Web.Mvc.AuthorizationContext)">
             <summary>
-            Executed before the action method
+            Authorisation handler
             </summary>
-            <param name="filterContext">The filter context</param>
+            <param name="filterContext">The context</param>
         </member>
         <member name="P:Triggerfish.Web.Mvc.AuthoriseAttribute.RedirectTo">
             <summary>
