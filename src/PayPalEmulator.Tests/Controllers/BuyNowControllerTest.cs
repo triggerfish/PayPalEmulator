@@ -16,13 +16,13 @@ namespace PayPalEmulator.Tests.Controllers
 	public class BuyNowControllerTest : DatabaseTest
 	{
 		private Repository<Transaction> m_repository;
-		private Mock<IPostSubmitter> m_postSubmitter = new Mock<IPostSubmitter>();
+		private Mock<IHttpRequest> m_httpRequest = new Mock<IHttpRequest>();
 
 		[TestMethod]
 		public void ShouldDisplayBuyNow()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			ViewResult result = controller.BuyNow(1);
@@ -37,7 +37,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldThrowFromBuyNowIfInvalidId()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			try
@@ -57,7 +57,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldRedirectToPaidFromPayNow()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			ActionResult result = controller.PayNow(1, BuyNowAction.Succeed);
@@ -72,7 +72,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldCreateTxAndVerifyNumbers()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			controller.PayNow(1, BuyNowAction.Succeed);
@@ -89,7 +89,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldSendIpnMessage()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 			Transaction tx = m_repository.Get(1);
 			tx.IpnReturnUrl = "http://test.com/";
 			UnitOfWork.Commit();
@@ -98,27 +98,27 @@ namespace PayPalEmulator.Tests.Controllers
 			controller.PayNow(1, BuyNowAction.Succeed);
 
 			// Assert
-			m_postSubmitter.Verify(x => x.BeginPost(null, null));
+			m_httpRequest.Verify(x => x.BeginSend(null, null));
 		}
 
 		[TestMethod]
 		public void ShouldNotSendIpnMessageIfNoUrl()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			controller.PayNow(1, BuyNowAction.Succeed);
 
 			// Assert
-			m_postSubmitter.Verify(x => x.BeginPost(null, null), Times.Never());
+			m_httpRequest.Verify(x => x.BeginSend(null, null), Times.Never());
 		}
 
 		[TestMethod]
 		public void ShouldSetStatusToFailed()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			controller.PayNow(1, BuyNowAction.Fail);
@@ -133,7 +133,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldThrowFromPayNowIfInvalidId()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			try
@@ -158,7 +158,7 @@ namespace PayPalEmulator.Tests.Controllers
 			tx.State = "Completed";
 			UnitOfWork.Commit();
 
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			ViewResult result = controller.Paid(1) as ViewResult;
@@ -173,7 +173,7 @@ namespace PayPalEmulator.Tests.Controllers
 		public void ShouldThrowFromPaidIfInvalidId()
 		{
 			// Arrange
-			BuyNowController controller = new BuyNowController(m_repository, m_postSubmitter.Object);
+			BuyNowController controller = new BuyNowController(m_repository, m_httpRequest.Object);
 
 			// Act
 			try
