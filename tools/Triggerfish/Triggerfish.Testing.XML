@@ -267,6 +267,26 @@
             Gets the name of the action invoked by this route
             </summary>
         </member>
+        <member name="T:Triggerfish.Web.Mvc.Testing.BinderHelpers">
+            <summary>
+            Binder helper methods
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.BinderHelpers.CreateModelBindingContext(System.String)">
+            <summary>
+            Creates a default model binding context object
+            </summary>
+            <param name="argName">The action method argument name</param>
+            <returns>A new ModelBindingContext object</returns>
+        </member>
+        <member name="M:Triggerfish.Web.Mvc.Testing.BinderHelpers.CreateModelBindingContext(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Creates a default model binding context object
+            </summary>
+            <param name="argName">The action method argument name</param>
+            <param name="argValues">Dictionary of context name-value pairs</param>
+            <returns>A new ModelBindingContext object</returns>
+        </member>
         <member name="T:Triggerfish.Web.Testing.MockExtensions">
             <summary>
             Extension methods to add further mocking behaviour
@@ -398,26 +418,6 @@
             is not allowed and the default home url is returned ("/")</param>
             <param name="callingAssembly">The assembly with the controller/action</param>
             <returns>A sanitised valid url for the site</returns>
-        </member>
-        <member name="T:Triggerfish.Web.Mvc.Testing.BinderHelpers">
-            <summary>
-            Binder helper methods
-            </summary>
-        </member>
-        <member name="M:Triggerfish.Web.Mvc.Testing.BinderHelpers.CreateModelBindingContext(System.String)">
-            <summary>
-            Creates a default model binding context object
-            </summary>
-            <param name="argName">The action method argument name</param>
-            <returns>A new ModelBindingContext object</returns>
-        </member>
-        <member name="M:Triggerfish.Web.Mvc.Testing.BinderHelpers.CreateModelBindingContext(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
-            <summary>
-            Creates a default model binding context object
-            </summary>
-            <param name="argName">The action method argument name</param>
-            <param name="argValues">Dictionary of context name-value pairs</param>
-            <returns>A new ModelBindingContext object</returns>
         </member>
     </members>
 </doc>

@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Triggerfish.NHibernate;
 using Triggerfish.Web.Mvc;
 using Triggerfish.Web;
+using System.Threading;
 
 namespace PayPalEmulator.Controllers
 {
@@ -21,12 +22,12 @@ namespace PayPalEmulator.Controllers
 	public class BuyNowController : Controller
 	{
 		private Repository<Transaction> m_txRepository;
-		private IPostSubmitter m_postSubmitter;
+		private IHttpRequest m_httpRequester;
 
-		public BuyNowController(Repository<Transaction> txRepository, IPostSubmitter postSubmitter)
+		public BuyNowController(Repository<Transaction> txRepository, IHttpRequest httpRequester)
 		{
 			m_txRepository = txRepository;
-			m_postSubmitter = postSubmitter;
+			m_httpRequester = httpRequester;
 		}
 
 		[AcceptVerbs(HttpVerbs.Get)]
@@ -62,11 +63,12 @@ namespace PayPalEmulator.Controllers
 					break;
 			}
 
+
 			if (!String.IsNullOrEmpty(tx.IpnReturnUrl))
 			{
-				m_postSubmitter.Url = tx.IpnReturnUrl;
-				m_postSubmitter.PostItems = tx.ToIpnQueryString();
-				m_postSubmitter.BeginPost(null, null);
+				m_httpRequester.Url = tx.IpnReturnUrl;
+				m_httpRequester.Parameters = tx.ToIpnQueryString();
+				ThreadPool.QueueUserWorkItem(new WaitCallback(SendIPN), m_httpRequester);
 			}
 
 			return RedirectToAction("Paid", new { txId = txId });
@@ -89,6 +91,12 @@ namespace PayPalEmulator.Controllers
 			}
 
 			return tx;
+		}
+
+		private static void SendIPN(object obj)
+		{
+			IHttpRequest request = (IHttpRequest)obj;
+			request.BeginSend(null, null);
 		}
 	}
 }

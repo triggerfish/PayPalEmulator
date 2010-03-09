@@ -52,8 +52,8 @@ namespace PayPalEmulator
 				.Named("_notify-validate");
 
 			// misc
-			Bind<IPostSubmitter>()
-				.To<PostSubmitter>();
+			Bind<IHttpRequest>()
+				.To<HttpRequest>();
 		}
 	}
 }

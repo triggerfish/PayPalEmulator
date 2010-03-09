@@ -4,70 +4,6 @@
         <name>Triggerfish.Web</name>
     </assembly>
     <members>
-        <member name="T:Triggerfish.Web.PostTypeEnum">
-            <summary>
-            Determines what type of post to perform.
-            </summary>
-        </member>
-        <member name="F:Triggerfish.Web.PostTypeEnum.Get">
-            <summary>
-            Does a get against the source.
-            </summary>
-        </member>
-        <member name="F:Triggerfish.Web.PostTypeEnum.Post">
-            <summary>
-            Does a post against the source.
-            </summary>
-        </member>
-        <member name="T:Triggerfish.Web.IPostSubmitter">
-            <summary>
-            Submits post data to a url.
-            </summary>
-        </member>
-        <member name="M:Triggerfish.Web.IPostSubmitter.Post">
-            <summary>
-            Posts the supplied data to specified url.
-            </summary>
-            <returns>a string containing the result of the post.</returns>
-        </member>
-        <member name="M:Triggerfish.Web.IPostSubmitter.Post(System.String)">
-            <summary>
-            Posts the supplied data to specified url.
-            </summary>
-            <param name="url">The url to post to.</param>
-            <returns>a string containing the result of the post.</returns>
-        </member>
-        <member name="M:Triggerfish.Web.IPostSubmitter.Post(System.String,Triggerfish.Web.QueryString)">
-            <summary>
-            Posts the supplied data to specified url.
-            </summary>
-            <param name="url">The url to post to.</param>
-            <param name="postItems">The values to post.</param>
-            <returns>a string containing the result of the post.</returns>
-        </member>
-        <member name="M:Triggerfish.Web.IPostSubmitter.BeginPost(System.AsyncCallback,System.Object)">
-            <summary>
-            Posts the supplied data to specified url asyncronously.
-            </summary>
-            <param name="callback">Callback delegate</param>
-            <param name="state">Request state object</param>
-            <returns>An asynchronous result</returns>
-        </member>
-        <member name="P:Triggerfish.Web.IPostSubmitter.Url">
-            <summary>
-            Gets or sets the url to submit the post to.
-            </summary>
-        </member>
-        <member name="P:Triggerfish.Web.IPostSubmitter.PostItems">
-            <summary>
-            Gets or sets the items to post.
-            </summary>
-        </member>
-        <member name="P:Triggerfish.Web.IPostSubmitter.Type">
-            <summary>
-            Gets or sets the type of action to perform against the url.
-            </summary>
-        </member>
         <member name="T:Triggerfish.Web.Mvc.RouteAttribute">
             <summary>
             Assigns a URL route to an MVC Controller class method.
@@ -185,6 +121,21 @@
             </summary>
             <param name="queryString">An existing query string</param>
         </member>
+        <member name="M:Triggerfish.Web.QueryString.Contains(System.String)">
+            <summary>
+            Tests whether or not the given key exists
+            </summary>
+            <param name="key">The key</param>
+            <returns>True if the key exists, false otherwise</returns>
+        </member>
+        <member name="M:Triggerfish.Web.QueryString.Add(System.String,System.String)">
+            <summary>
+            Adds a new parameter
+            </summary>
+            <param name="key">The parameter key</param>
+            <param name="value">The parameter value</param>
+            <returns>This to enable method chaining</returns>
+        </member>
         <member name="M:Triggerfish.Web.QueryString.ExtractQueryString(System.String)">
             <summary>
             Extracts a QueryString from a full URL
@@ -199,47 +150,32 @@
             <param name="s">The string to parse</param>
             <returns>The QueryString object </returns>
         </member>
-        <member name="M:Triggerfish.Web.QueryString.Add(System.String,System.String)">
-            <summary>
-            Add a name value pair to the collection
-            </summary>
-            <param name="name">The name</param>
-            <param name="value">The value associated to the name</param>
-            <returns>The QueryString object</returns>
-        </member>
-        <member name="M:Triggerfish.Web.QueryString.Contains(System.String)">
-            <summary>
-            Checks if a name already exists within the query string collection
-            </summary>
-            <param name="name">The name to check</param>
-            <returns>True if the name exists, false otherwise</returns>
-        </member>
         <member name="M:Triggerfish.Web.QueryString.ToString">
             <summary>
             Outputs the QueryString object to a string as a HTTP GET
             </summary>
             <returns>The encoded QueryString as it would appear in a browser</returns>
         </member>
-        <member name="M:Triggerfish.Web.QueryString.ToString(Triggerfish.Web.PostTypeEnum)">
+        <member name="M:Triggerfish.Web.QueryString.ToString(Triggerfish.Web.HttpAction)">
             <summary>
             Outputs the QueryString object to a string
             </summary>
             <param name="type">The type of HTTP action the query will be used in</param>
             <returns>The encoded QueryString as it would appear in a browser</returns>
         </member>
-        <member name="P:Triggerfish.Web.QueryString.Item(System.String)">
-            <summary>
-            Overrides the default indexer
-            </summary>
-            <param name="name">Name index into the collection</param>
-            <returns>The associated decoded value for the specified name</returns>
-        </member>
         <member name="P:Triggerfish.Web.QueryString.Item(System.Int32)">
             <summary>
-            Overrides the default indexer
+            Overridden indexer to decode the value
             </summary>
-            <param name="index">Index into the collection</param>
-            <returns>The associated decoded value for the specified index</returns>
+            <param name="index">The index</param>
+            <returns>The decoded value</returns>
+        </member>
+        <member name="P:Triggerfish.Web.QueryString.Item(System.String)">
+            <summary>
+            Overridden indexer to decode the value
+            </summary>
+            <param name="index">The key name</param>
+            <returns>The decoded value</returns>
         </member>
         <member name="T:Triggerfish.Web.Mvc.PageLinkExtensions">
             <summary>
@@ -467,6 +403,63 @@
             <param name="pageUrlGenerator">Delegate to return the URL for the given page index</param>
             <returns>The HTML string</returns>
         </member>
+        <member name="T:Triggerfish.Web.HttpAction">
+            <summary>
+            Determines what type of HTTP action to perform.
+            </summary>
+        </member>
+        <member name="F:Triggerfish.Web.HttpAction.Get">
+            <summary>
+            Does a get against the source
+            </summary>
+        </member>
+        <member name="F:Triggerfish.Web.HttpAction.Post">
+            <summary>
+            Does a post against the source
+            </summary>
+        </member>
+        <member name="T:Triggerfish.Web.IHttpRequest">
+            <summary>
+            Submits a HTTP request
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.IHttpRequest.Send">
+            <summary>
+            Sends the request to the specified url.
+            </summary>
+            <returns>The response from the action.</returns>
+        </member>
+        <member name="M:Triggerfish.Web.IHttpRequest.Send(System.String,Triggerfish.Web.QueryString)">
+            <summary>
+            Sends the request to the specified url.
+            </summary>
+            <param name="url">The url to submit the request to</param>
+            <param name="parameters">The request parameters</param>
+            <returns>The response from the action.</returns>
+        </member>
+        <member name="M:Triggerfish.Web.IHttpRequest.BeginSend(System.AsyncCallback,System.Object)">
+            <summary>
+            Posts the supplied data to specified url asyncronously.
+            </summary>
+            <param name="callback">Callback delegate</param>
+            <param name="state">Request state object</param>
+            <returns>An asynchronous result</returns>
+        </member>
+        <member name="P:Triggerfish.Web.IHttpRequest.Url">
+            <summary>
+            Gets or sets the url to submit the request to
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.IHttpRequest.Parameters">
+            <summary>
+            Gets or sets the query/post parameters
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.IHttpRequest.Action">
+            <summary>
+            Gets or sets the type of HTTP action to perform
+            </summary>
+        </member>
         <member name="T:Triggerfish.StringExtensions">
             <summary>
             Extension methods for url processing
@@ -692,73 +685,6 @@
             <param name="cssClass">The class attribute value, can be null</param>
             <param name="text">The span element text</param>
             <returns>An HTML span tag</returns>
-        </member>
-        <member name="T:Triggerfish.Web.PostSubmitter">
-            <summary>
-            Submits post data to a url.
-            </summary>
-        </member>
-        <member name="M:Triggerfish.Web.PostSubmitter.#ctor">
-            <summary>
-            Default constructor.
-            </summary>
-        </member>
-        <member name="M:Triggerfish.Web.PostSubmitter.#ctor(System.String)">
-            <summary>
-            Constructor that accepts a url as a parameter
-            </summary>
-            <param name="url">The url where the post will be submitted to.</param>
-        </member>
-        <member name="M:Triggerfish.Web.PostSubmitter.#ctor(System.String,Triggerfish.Web.QueryString)">
-            <summary>
-            Constructor allowing the setting of the url and items to post.
-            </summary>
-            <param name="url">the url for the post.</param>
-            <param name="postItems">The values for the post.</param>
-        </member>
-        <member name="M:Triggerfish.Web.PostSubmitter.Post">
-            <summary>
-            Posts the supplied data to specified url.
-            </summary>
-            <returns>a string containing the result of the post.</returns>
-        </member>
-        <member name="M:Triggerfish.Web.PostSubmitter.Post(System.String)">
-            <summary>
-            Posts the supplied data to specified url.
-            </summary>
-            <param name="url">The url to post to.</param>
-            <returns>a string containing the result of the post.</returns>
-        </member>
-        <member name="M:Triggerfish.Web.PostSubmitter.Post(System.String,Triggerfish.Web.QueryString)">
-            <summary>
-            Posts the supplied data to specified url.
-            </summary>
-            <param name="url">The url to post to.</param>
-            <param name="postItems">The values to post.</param>
-            <returns>a string containing the result of the post.</returns>
-        </member>
-        <member name="M:Triggerfish.Web.PostSubmitter.BeginPost(System.AsyncCallback,System.Object)">
-            <summary>
-            Posts the supplied data to specified url asyncronously.
-            </summary>
-            <param name="callback">Callback delegate</param>
-            <param name="state">Request state object</param>
-            <returns>An asynchronous result</returns>
-        </member>
-        <member name="P:Triggerfish.Web.PostSubmitter.Url">
-            <summary>
-            Gets or sets the url to submit the post to.
-            </summary>
-        </member>
-        <member name="P:Triggerfish.Web.PostSubmitter.PostItems">
-            <summary>
-            Gets or sets the items to post.
-            </summary>
-        </member>
-        <member name="P:Triggerfish.Web.PostSubmitter.Type">
-            <summary>
-            Gets or sets the type of action to perform against the url.
-            </summary>
         </member>
         <member name="T:Triggerfish.Web.Mvc.TransactionAttribute">
             <summary>
@@ -1048,6 +974,66 @@
             <param name="requestContext">Context data about the requested route</param>
             <param name="values">The route values</param>
             <returns>Url data</returns>
+        </member>
+        <member name="T:Triggerfish.Web.HttpRequest">
+            <summary>
+            Submits a HTTP request
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.HttpRequest.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Triggerfish.Web.HttpRequest.#ctor(System.String)">
+            <summary>
+            Constructor that accepts a url as a parameter
+            </summary>
+            <param name="url">The url where the post will be submitted to.</param>
+        </member>
+        <member name="M:Triggerfish.Web.HttpRequest.#ctor(System.String,Triggerfish.Web.QueryString)">
+            <summary>
+            Constructor allowing the setting of the url and items to post.
+            </summary>
+            <param name="url">the url for the post.</param>
+            <param name="postItems">The values for the post.</param>
+        </member>
+        <member name="M:Triggerfish.Web.HttpRequest.Send">
+            <summary>
+            Posts the supplied data to specified url.
+            </summary>
+            <returns>a string containing the result of the post.</returns>
+        </member>
+        <member name="M:Triggerfish.Web.HttpRequest.Send(System.String,Triggerfish.Web.QueryString)">
+            <summary>
+            Sends the request to the specified url.
+            </summary>
+            <param name="url">The url to submit the request to</param>
+            <param name="parameters">The request parameters</param>
+            <returns>The response from the action.</returns>
+        </member>
+        <member name="M:Triggerfish.Web.HttpRequest.BeginSend(System.AsyncCallback,System.Object)">
+            <summary>
+            Posts the supplied data to specified url asyncronously.
+            </summary>
+            <param name="callback">Callback delegate</param>
+            <param name="state">Request state object</param>
+            <returns>An asynchronous result</returns>
+        </member>
+        <member name="P:Triggerfish.Web.HttpRequest.Url">
+            <summary>
+            Gets or sets the url to submit the request to
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.HttpRequest.Parameters">
+            <summary>
+            Gets or sets the query/post parameters
+            </summary>
+        </member>
+        <member name="P:Triggerfish.Web.HttpRequest.Action">
+            <summary>
+            Gets or sets the type of HTTP action to perform
+            </summary>
         </member>
         <member name="T:Triggerfish.Web.Diagnostics.DiagnosticsModule">
             <summary>

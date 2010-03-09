@@ -2,7 +2,7 @@
 
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">Paid</asp:Content>
 
-<asp:Content ID="Head" ContentPlaceHolderID="HeadContent" runat="server"><%= String.Format("<META http-equiv=\"REFRESH\" content=5;url=\"{0}\">", Model.Tx.ToPdtFullReturnUrl()) %></asp:Content>
+<asp:Content ID="Head" ContentPlaceHolderID="HeadContent" runat="server"><%= String.Format("<META http-equiv=\"REFRESH\" content=5;url=\"{0}\">", Model.Tx.ToPdtReturnUrl())%></asp:Content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Paid</h2>
