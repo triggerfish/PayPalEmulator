@@ -45,12 +45,7 @@ namespace PayPalEmulator
 
 					if (expected == actual)
 					{
-						StringBuilder sb = new StringBuilder();
-						sb.AppendLine("VERIFIED");
-						sb.AppendLine(BuildContent(dbTx));
-						sb.AppendLine(String.Format("{0}={1}", "verify_sign", HttpUtility.UrlEncodeUnicode(dbTx.VerifySign)));
-
-						cr.Content = sb.ToString();
+						cr.Content = "VERIFIED";
 					}
 				}
 			}

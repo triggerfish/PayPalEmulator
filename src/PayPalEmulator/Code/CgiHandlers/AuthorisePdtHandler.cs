@@ -29,7 +29,7 @@ namespace PayPalEmulator
 			ContentResult cr = new ContentResult();
 			cr.ContentEncoding = Encoding.UTF8;
 			cr.ContentType = "text/html";
-			cr.Content = "FAIL";
+			cr.Content = "FAIL\n";
 
 			if (tx != null)
 			{
@@ -37,8 +37,8 @@ namespace PayPalEmulator
 				if (dbTx != null && dbTx.AuthToken == tx.AuthToken)
 				{
 					StringBuilder sb = new StringBuilder();
-					sb.AppendLine("SUCCESS");
-					sb.AppendLine(BuildContent(dbTx));
+					sb.Append("SUCCESS\n");
+					sb.Append(BuildContent(dbTx));
 
 					cr.Content = sb.ToString();
 				}
